@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">BookSharing - MAD</string>
+    <string name="change_profile_image_txt">Change the profile image</string>
+    <string name="hint_full_name">Full Name</string>
+    <string name="hint_favourite_books">Favourite Book Generes</string>
+    <string name="hint_bio">Short Bio</string>
+    <string name="hint_city">City</string>
+    <string name="update_profile_btn">Update Profile</string>
+    <string name="rating">rating</string>
+    <string name="shared_books">shared books</string>
+    <string name="my_books_btn">My Books</string>
+    <string name="contact_me_btn">Contact Me</string>
+    <string name="not_all_permission_granted">Not all permissions are granted. Please modify them in the settings page</string>
+    <string name="permission_rationale_title">Camera and Gallery permissions are required</string>
+    <string name="permission_rationale_message">We need to access your camera and gallery to give you the possibility to modify your profile image</string>
+    <string name="crop_ok">Profile Image successfully updated</string>
+    <string name="crop_not_ok">Cropping unsuccessful: </string>
+    <string name="complete_fields">Please fill all the fields</string>
+</resources>
