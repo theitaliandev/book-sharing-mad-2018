@@ -14,10 +14,10 @@ import com.example.giuseppedigiorno.booksharing_mad.R
 import com.example.giuseppedigiorno.booksharing_mad.Utilities.EXTRA_BARCODE
 import com.example.giuseppedigiorno.booksharing_mad.Utilities.URL
 import com.google.gson.GsonBuilder
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_add_book.*
-import me.dm7.barcodescanner.zbar.Result
-import me.dm7.barcodescanner.zbar.ZBarScannerView
 import okhttp3.*
+import org.w3c.dom.Text
 import java.io.IOException
 
 class AddBookActivity : AppCompatActivity() {
@@ -29,7 +29,7 @@ class AddBookActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_book)
         if(!TextUtils.isEmpty(intent.getStringExtra(EXTRA_BARCODE))){
             barcodeNumber = intent.getStringExtra(EXTRA_BARCODE)
-            barcodeText.text = barcodeNumber
+            isbnEditText.setText(barcodeNumber)
         }
     }
 
@@ -59,13 +59,32 @@ class AddBookActivity : AppCompatActivity() {
 
                     val gson = GsonBuilder().create()
                     val bookInfo =  gson.fromJson(body, Items::class.java)
-                    val bookItem = bookInfo.items.get(0)
-                    val bookTitle = bookItem.volumeInfo.title
-                    runOnUiThread {
-                        if(!TextUtils.isEmpty(bookTitle)){
-                            bookTitleText.text = bookTitle
+                    if(bookInfo.totalItems > 0) {
+                        val bookItem = bookInfo.items.get(0)
+                        val bookImageUrl = bookItem.volumeInfo.imageLinks.smallThumbnail
+                        val bookTitle = bookItem.volumeInfo.title
+                        val bookAuthor = bookItem.volumeInfo.authors[0]
+                        val bookDate = bookItem.volumeInfo.publishedDate
+                        val bookCategory = bookItem.volumeInfo.categories[0]
+                        runOnUiThread {
+                            if(!TextUtils.isEmpty(bookImageUrl) && !TextUtils.isEmpty(bookTitle) && !TextUtils.isEmpty(bookAuthor) && !TextUtils.isEmpty(bookDate) && !TextUtils.isEmpty(bookCategory)){
+                                bookInfoCardView.visibility = View.VISIBLE
+                                Picasso.get()
+                                        .load(bookImageUrl)
+                                        .into(bookImageView)
+                                bookTitleTextView.text = bookTitle
+                                writtenByTextView.text = "Written by: " + bookAuthor
+                                categoryBooktextView.text = "Category: " + bookCategory
+                                bookPublishedTextView.text = "Published in: " + bookDate
+                            }
+                        }
+                    }else{
+                        runOnUiThread {
+                            Toast.makeText(this@AddBookActivity, "We can't find your book in Google's Book Library, please try again", Toast.LENGTH_LONG).show()
                         }
                     }
+
+
                 }
                 override fun onFailure(call: Call?, e: IOException?) {
                 }
@@ -74,8 +93,13 @@ class AddBookActivity : AppCompatActivity() {
         }
     }
 
+    fun addBookButtonPressed(view: View){
+
+    }
+
 }
 
-class Items(val items: List<BookItems>)
+class Items(val items: List<BookItems>, val totalItems: Int)
 class BookItems(val volumeInfo: Book)
-class Book(val title: String)
+class Book(val title: String, val imageLinks: ImageLinks, val authors: List<String>, val publishedDate: String, val categories: List<String>)
+class ImageLinks(val smallThumbnail: String)

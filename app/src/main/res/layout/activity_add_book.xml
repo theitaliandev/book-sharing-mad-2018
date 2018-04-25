@@ -4,44 +4,160 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Controller.AddBookActivity">
+    tools:context=".Controller.AddBookActivity"
+    android:background="@drawable/gradient">
 
-    <Button
-        android:id="@+id/startScanButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start Scanning"
-        android:layout_centerInParent="true"
-        android:onClick="startScanButtonPressed"/>
+  <LinearLayout
+      android:id="@+id/findBookLinearLayout"
+      android:layout_width="match_parent"
+      android:layout_height="290dp"
+      android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/barcodeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/startScanButton"
-        android:layout_centerInParent="true"
-        android:textSize="20sp"
-        android:layout_marginTop="20dp"
-        android:textColor="@android:color/white"
-        android:hint="BARCODE"/>
+      <Button
+          android:id="@+id/isbnScanButton"
+          android:layout_width="70dp"
+          android:layout_height="70dp"
+          android:background="@drawable/barcode_icon"
+          android:layout_gravity="center_horizontal"
+          android:layout_marginTop="20dp"
+          android:onClick="startScanButtonPressed"/>
+      <TextView
+          android:id="@+id/tapToScanTxt"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:text="Tap to scan the ISBN"/>
 
-    <Button
-        android:id="@+id/findBookButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/barcodeText"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="10dp"
-        android:text="Find the book"
-        android:onClick="findBookButtonPressed"/>
+      <EditText
+          android:id="@+id/isbnEditText"
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:layout_marginLeft="90dp"
+          android:layout_marginRight="90dp"
+          android:layout_marginTop="20dp"
+          android:hint="ISBN"
+          android:textAlignment="center"/>
 
-    <TextView
-        android:id="@+id/bookTitleText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Book Title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:textSize="30sp"/>
+      <Button
+          android:layout_width="70dp"
+          android:layout_height="70dp"
+          android:background="@drawable/find_book_icon"
+          android:layout_marginTop="20dp"
+          android:layout_gravity="center_horizontal"
+          android:onClick="findBookButtonPressed"/>
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Tap to find the Book"
+          android:layout_gravity="center_horizontal"/>
+  </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/findBookLinearLayout">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/bookInfoCardView"
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="5dp"
+            app:contentPadding="15dp"
+            app:cardCornerRadius="15dp"
+            app:cardBackgroundColor="@android:color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/bookImageView"
+                    android:layout_width="110dp"
+                    android:layout_height="215dp"
+                    android:layout_gravity="center_vertical"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp">
+
+                    <TextView
+                        android:id="@+id/bookTitleTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="false"
+                        android:maxLines="2"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/black"/>
+
+                    <TextView
+                        android:id="@+id/writtenByTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="false"
+                        android:maxLines="2"
+                        android:textSize="14sp"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@android:color/black"/>
+                    <TextView
+                        android:id="@+id/categoryBooktextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="false"
+                        android:maxLines="2"
+                        android:textSize="14sp"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@android:color/black"/>
+
+                    <TextView
+                        android:id="@+id/bookPublishedTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="false"
+                        android:maxLines="2"
+                        android:textSize="14sp"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@android:color/black"/>
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/addBookCardView"
+                        android:onClick="addBookButtonPressed"
+                        android:layout_width="100dp"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_gravity="center"
+                        app:cardBackgroundColor="@color/colorAccent"
+                        app:cardCornerRadius="10dp"
+                        android:elevation="10dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/textView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Add Book"
+                                android:textColor="#fff"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:layout_centerInParent="true"/>
+                        </RelativeLayout>
+                    </android.support.v7.widget.CardView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
 
 </RelativeLayout>
