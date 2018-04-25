@@ -10,19 +10,21 @@ import android.support.v4.app.ActivityCompat
 import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
+import com.example.giuseppedigiorno.booksharing_mad.Model.Book
 import com.example.giuseppedigiorno.booksharing_mad.R
 import com.example.giuseppedigiorno.booksharing_mad.Utilities.EXTRA_BARCODE
+import com.example.giuseppedigiorno.booksharing_mad.Utilities.EXTRA_BOOK
 import com.example.giuseppedigiorno.booksharing_mad.Utilities.URL
 import com.google.gson.GsonBuilder
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_add_book.*
 import okhttp3.*
-import org.w3c.dom.Text
 import java.io.IOException
 
 class AddBookActivity : AppCompatActivity() {
 
     var barcodeNumber: String? = null
+    var book = Book("", "", "", "", "", "")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,25 +64,26 @@ class AddBookActivity : AppCompatActivity() {
                     if(bookInfo.totalItems > 0) {
                         val bookItem = bookInfo.items.get(0)
                         val bookImageUrl = bookItem.volumeInfo.imageLinks.smallThumbnail
-                        val bookTitle = bookItem.volumeInfo.title
-                        val bookAuthor = bookItem.volumeInfo.authors[0]
-                        val bookDate = bookItem.volumeInfo.publishedDate
-                        val bookCategory = bookItem.volumeInfo.categories[0]
+                        book.bookTitle = bookItem.volumeInfo.title
+                        book.bookAuthor = bookItem.volumeInfo.authors[0]
+                        book.bookPublishedDate = bookItem.volumeInfo.publishedDate
+                        book.bookCategory = bookItem.volumeInfo.categories[0]
                         runOnUiThread {
-                            if(!TextUtils.isEmpty(bookImageUrl) && !TextUtils.isEmpty(bookTitle) && !TextUtils.isEmpty(bookAuthor) && !TextUtils.isEmpty(bookDate) && !TextUtils.isEmpty(bookCategory)){
+                            if(!TextUtils.isEmpty(bookImageUrl) && !TextUtils.isEmpty(book.bookTitle) && !TextUtils.isEmpty(book.bookAuthor) && !TextUtils.isEmpty(book.bookPublishedDate) && !TextUtils.isEmpty(book.bookCategory)){
+                                addBookManuallyLinearLayout.visibility = View.INVISIBLE
                                 bookInfoCardView.visibility = View.VISIBLE
                                 Picasso.get()
                                         .load(bookImageUrl)
                                         .into(bookImageView)
-                                bookTitleTextView.text = bookTitle
-                                writtenByTextView.text = "Written by: " + bookAuthor
-                                categoryBooktextView.text = "Category: " + bookCategory
-                                bookPublishedTextView.text = "Published in: " + bookDate
+                                bookTitleTextView.text = book.bookTitle
+                                writtenByTextView.text = "Written by: " + book.bookAuthor
+                                categoryBooktextView.text = "Category: " + book.bookCategory
+                                bookPublishedTextView.text = "Published in: " + book.bookPublishedDate
                             }
                         }
                     }else{
                         runOnUiThread {
-                            Toast.makeText(this@AddBookActivity, "We can't find your book in Google's Book Library, please try again", Toast.LENGTH_LONG).show()
+                            addBookManuallyLinearLayout.visibility = View.VISIBLE
                         }
                     }
 
@@ -94,12 +97,18 @@ class AddBookActivity : AppCompatActivity() {
     }
 
     fun addBookButtonPressed(view: View){
-
+        var addBookDetailActivity = Intent(this@AddBookActivity, AddBookDetailActivity::class.java)
+        addBookDetailActivity.putExtra(EXTRA_BOOK, book)
+        startActivity(addBookDetailActivity)
+    }
+    fun addBookManuallyButtonPressed(view: View){
+        var addBookDetailActivity = Intent(this@AddBookActivity, AddBookDetailActivity::class.java)
+        startActivity(addBookDetailActivity)
     }
 
 }
 
 class Items(val items: List<BookItems>, val totalItems: Int)
-class BookItems(val volumeInfo: Book)
-class Book(val title: String, val imageLinks: ImageLinks, val authors: List<String>, val publishedDate: String, val categories: List<String>)
+class BookItems(val volumeInfo: BookDetail)
+class BookDetail(val title: String, val imageLinks: ImageLinks, val authors: List<String>, val publishedDate: String, val categories: List<String>)
 class ImageLinks(val smallThumbnail: String)

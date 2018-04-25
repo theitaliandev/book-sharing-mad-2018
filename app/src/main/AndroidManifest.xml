@@ -29,7 +29,8 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".Controller.AddBookActivity" />
-        <activity android:name=".Controller.ZBarScannerActivity"></activity>
+        <activity android:name=".Controller.ZBarScannerActivity" />
+        <activity android:name=".Controller.AddBookDetailActivity"></activity>
     </application>
 
 </manifest>
