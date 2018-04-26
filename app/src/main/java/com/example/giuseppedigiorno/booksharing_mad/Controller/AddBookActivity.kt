@@ -40,7 +40,7 @@ class AddBookActivity : AppCompatActivity() {
             val zBarScannerActivity = Intent(this, ZBarScannerActivity::class.java)
             startActivity(zBarScannerActivity)
         }else{
-            Toast.makeText(this, "Camera permission are required to scan the barcode", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.camera_permission), Toast.LENGTH_LONG).show()
         }
     }
 
@@ -76,9 +76,9 @@ class AddBookActivity : AppCompatActivity() {
                                         .load(bookImageUrl)
                                         .into(bookImageView)
                                 bookTitleTextView.text = book.bookTitle
-                                writtenByTextView.text = "Written by: " + book.bookAuthor
-                                categoryBooktextView.text = "Category: " + book.bookCategory
-                                bookPublishedTextView.text = "Published in: " + book.bookPublishedDate
+                                writtenByTextView.text = getString(R.string.written_by) + book.bookAuthor
+                                categoryBooktextView.text = getString(R.string.category_) + book.bookCategory
+                                bookPublishedTextView.text = getString(R.string.published_in) + book.bookPublishedDate
                             }
                         }
                     }else{

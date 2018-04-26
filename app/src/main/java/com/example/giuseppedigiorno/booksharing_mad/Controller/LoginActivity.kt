@@ -36,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
         if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
             loginUser(email, password)
         }else{
-            Toast.makeText(this, "Please insert email and password", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.insert_email_and_password), Toast.LENGTH_LONG).show()
         }
     }
 
@@ -52,7 +52,7 @@ class LoginActivity : AppCompatActivity() {
                         var showProfileActivity = Intent(this, ShowProfileActivity::class.java)
                         startActivity(showProfileActivity)
                     }else{
-                        Toast.makeText(this, "Please insert correct email and password, or check your connection", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, getString(R.string.correct_email_and_password), Toast.LENGTH_LONG).show()
                     }
                 }
     }

@@ -141,7 +141,7 @@ class EditProfileActivity : AppCompatActivity() {
                 Toast.makeText(this@EditProfileActivity, getString(R.string.not_all_permission_granted), Toast.LENGTH_LONG).show()
             }
             }else{
-            Toast.makeText(this, "To modify your profile image you need an internet connection", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.profile_image_internet_needed), Toast.LENGTH_LONG).show()
         }
 
 
@@ -236,7 +236,7 @@ class EditProfileActivity : AppCompatActivity() {
             var showProfileActivity = Intent(this, ShowProfileActivity::class.java)
             startActivity(showProfileActivity)
         }else{
-            Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.fill_the_fields), Toast.LENGTH_SHORT).show()
         }
 
     }

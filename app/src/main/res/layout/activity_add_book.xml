@@ -26,7 +26,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center_horizontal"
-          android:text="Tap to scan the ISBN"/>
+          android:text="@string/tap_to_scan_the_isbn"/>
 
       <EditText
           android:id="@+id/isbnEditText"
@@ -35,7 +35,7 @@
           android:layout_marginLeft="90dp"
           android:layout_marginRight="90dp"
           android:layout_marginTop="20dp"
-          android:hint="ISBN"
+          android:hint="@string/isbn_hint"
           android:textAlignment="center"/>
 
       <Button
@@ -49,7 +49,7 @@
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="Tap to find the Book"
+          android:text="@string/tap_to_find_the_book"
           android:layout_gravity="center_horizontal"/>
   </LinearLayout>
 
@@ -66,14 +66,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="I am really sorry! Try again or there is a way for you to add this book..."
+            android:text="@string/no_book_found_message"
             android:textSize="15sp"
             android:textAlignment="center"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Manually!"
+            android:text="@string/manually"
             android:textStyle="bold"
             android:textSize="16sp"
             android:layout_gravity="center_horizontal"/>
@@ -97,7 +97,7 @@
                     android:id="@+id/addBookManuallyTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Add Book"
+                    android:text="@string/add_book"
                     android:textColor="#fff"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -199,7 +199,7 @@
                                 android:id="@+id/textView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Add Book"
+                                android:text="@string/add_book"
                                 android:textColor="#fff"
                                 android:textSize="14sp"
                                 android:textStyle="bold"

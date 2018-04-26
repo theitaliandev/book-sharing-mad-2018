@@ -80,14 +80,14 @@ class AddBookDetailActivity : AppCompatActivity() {
                 if(!TextUtils.isEmpty(book.bookTitle)){
                     CropImage.startPickImageActivity(this)
                 }else{
-                    Toast.makeText(this, "We need the Book Title to store correctly the image, so please add it before the Book Title", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, getString(R.string.book_title_needed), Toast.LENGTH_LONG).show()
                 }
 
             }else {
                 Toast.makeText(this@AddBookDetailActivity, getString(R.string.not_all_permission_granted), Toast.LENGTH_LONG).show()
             }
         }else{
-            Toast.makeText(this, "To modify your profile image you need an internet connection", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.modify_image_internet_nedeed), Toast.LENGTH_LONG).show()
         }
 
 
@@ -168,7 +168,7 @@ class AddBookDetailActivity : AppCompatActivity() {
                         }
                     }
         }else{
-            Toast.makeText(this, "Please fill all the required fields!", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.fill_the_fields), Toast.LENGTH_LONG).show()
         }
 
     }

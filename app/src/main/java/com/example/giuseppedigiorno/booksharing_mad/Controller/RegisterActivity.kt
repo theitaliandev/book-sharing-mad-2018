@@ -34,7 +34,7 @@ class RegisterActivity : AppCompatActivity() {
         if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(name)){
             createNewAccount(email, password, name)
         }else{
-            Toast.makeText(this, "Please fill all the required fields", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.fill_the_fields), Toast.LENGTH_LONG).show()
         }
     }
 
@@ -57,7 +57,7 @@ class RegisterActivity : AppCompatActivity() {
                                         showProfileActivity.putExtra("name", name)
                                         startActivity(showProfileActivity)
                                     }else{
-                                        Toast.makeText(this, "Authentication failed",
+                                        Toast.makeText(this, getString(R.string.auth_failed),
                                                 Toast.LENGTH_SHORT).show()
                                     }
                                 }

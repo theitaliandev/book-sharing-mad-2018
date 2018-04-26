@@ -26,7 +26,7 @@
         android:background="#11000000"
         android:layout_marginTop="35dp"
         android:inputType="textEmailAddress"
-        android:hint="email"
+        android:hint="@string/email"
         android:textSize="16sp" />
 
     <EditText
@@ -41,7 +41,7 @@
         android:ems="10"
         android:background="#11000000"
         android:inputType="textPassword"
-        android:hint="password"
+        android:hint="@string/password"
         android:textSize="16sp" />
 
     <android.support.v7.widget.CardView
@@ -64,7 +64,7 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Login"
+                android:text="@string/login"
                 android:textColor="#fff"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -76,7 +76,7 @@
         android:onClick="registerHerePressed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register Here."
+        android:text="@string/register_here"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="75dp"
         android:layout_centerHorizontal="true"
