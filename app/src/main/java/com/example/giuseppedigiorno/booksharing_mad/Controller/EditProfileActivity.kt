@@ -50,6 +50,7 @@ import java.lang.Exception
 class EditProfileActivity : AppCompatActivity() {
 
     lateinit var user: User
+    private var mAuth: FirebaseAuth? = null
     private var mCurrentUser: FirebaseUser? = null
     private var mStorageRef: StorageReference? = null
     private var mDatabase: DatabaseReference?  = null
@@ -57,6 +58,7 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
+        mAuth = FirebaseAuth.getInstance()
         mCurrentUser = FirebaseAuth.getInstance().currentUser
         var userId = mCurrentUser!!.uid
         mDatabase = FirebaseDatabase.getInstance().reference
@@ -67,23 +69,15 @@ class EditProfileActivity : AppCompatActivity() {
         user = intent.getParcelableExtra(EXTRA_USER)
         if(!TextUtils.isEmpty(user.name)){
             nameEditTxt.setText(user.name)
-        }else{
-            nameEditTxt.setText(getString(R.string.hint_full_name))
         }
         if(!TextUtils.isEmpty(user.favouriteBookGeneres)){
             favouriteBooksGeneresEditTxt.setText(user.favouriteBookGeneres)
-        }else{
-            favouriteBooksGeneresEditTxt.setText(getString(R.string.hint_favourite_books))
         }
         if(!TextUtils.isEmpty(user.bio)){
             bioEditTxt.setText(user.bio)
-        }else{
-            bioEditTxt.setText(getString(R.string.hint_bio))
         }
         if(!TextUtils.isEmpty(user.city)){
             cityEditTxt.setText(user.city)
-        }else{
-            cityEditTxt.setText(getString(R.string.hint_city))
         }
         if(!TextUtils.isEmpty(user.photoUrl)){
             Picasso.get()
@@ -163,6 +157,7 @@ class EditProfileActivity : AppCompatActivity() {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
             if (resultCode == Activity.RESULT_OK) {
+                progressBarLayout.visibility = View.VISIBLE
                 val resultUri = result.uri
                 var userId = mCurrentUser!!.uid
                 var imageFile = File(resultUri.path)
@@ -191,14 +186,21 @@ class EditProfileActivity : AppCompatActivity() {
                                     if(task.isSuccessful){
                                         Picasso.get()
                                                 .load(user.photoUrl)
-                                                .into(editProfileImage)
+                                                .into(editProfileImage, object: Callback {
+                                                    override fun onSuccess() {
+                                                        progressBarLayout.visibility = View.INVISIBLE
+                                                    }
+
+                                                    override fun onError(e: Exception?) {
+                                                    }
+
+                                                })
                                     }else{
 
                                     }
                                 }
                             }
                         }
-                Toast.makeText(this, getString(R.string.crop_ok), Toast.LENGTH_SHORT).show()
             }else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
                 Toast.makeText(this, "${getString(R.string.crop_not_ok)}${result.error}", Toast.LENGTH_LONG).show()
             }
@@ -233,8 +235,21 @@ class EditProfileActivity : AppCompatActivity() {
             }
             var showProfileActivity = Intent(this, ShowProfileActivity::class.java)
             startActivity(showProfileActivity)
+        }else{
+            Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
         }
 
+    }
+
+    fun backButtonPressed(view: View) {
+        var showProfileActivity = Intent(this, ShowProfileActivity::class.java)
+        startActivity(showProfileActivity)
+    }
+
+    fun signOutButtonPressed(view: View) {
+        mAuth!!.signOut()
+        var loginActivity = Intent(this, LoginActivity::class.java)
+        startActivity(loginActivity)
     }
 
     fun EditText.limitLength(maxLength: Int){

@@ -247,14 +247,6 @@
 
                 </LinearLayout>
 
-                <TextView
-                    android:onClick="signOutPressed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sign Out"
-                    android:textColor="@android:color/black"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"/>
             </LinearLayout>
 
         </RelativeLayout>

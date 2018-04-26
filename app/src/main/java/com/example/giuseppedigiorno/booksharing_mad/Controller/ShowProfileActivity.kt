@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_show_profile.*
 
 class ShowProfileActivity : AppCompatActivity() {
 
-    private var mAuth: FirebaseAuth? = null
+
     private var mDatabase: DatabaseReference?  = null
     private var mCurrentUser: FirebaseUser? = null
 
@@ -27,7 +27,6 @@ class ShowProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_profile)
-        mAuth = FirebaseAuth.getInstance()
         mCurrentUser = FirebaseAuth.getInstance().currentUser
         var userId = mCurrentUser!!.uid
         mDatabase = FirebaseDatabase.getInstance().reference
@@ -82,12 +81,6 @@ class ShowProfileActivity : AppCompatActivity() {
         var editProfileActivity = Intent(this, EditProfileActivity::class.java)
         editProfileActivity.putExtra(EXTRA_USER, user)
         startActivity(editProfileActivity)
-    }
-
-    fun signOutPressed(view: View) {
-        mAuth!!.signOut()
-        var loginActivity = Intent(this, LoginActivity::class.java)
-        startActivity(loginActivity)
     }
 
     fun addBookButtonPressed(view: View) {
