@@ -22,6 +22,7 @@
     <string name="no_book_found_message">I am really sorry! Try again or there is a way for you to add this book</string>
     <string name="manually">Manually!</string>
     <string name="add_book">Add Book</string>
+    <string name="add_book_button">Add Book</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="change_book_image">Change book image</string>
     <string name="book_title_hint">Book Title</string>

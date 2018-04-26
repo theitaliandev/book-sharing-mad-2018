@@ -23,7 +23,8 @@
     <string name="no_book_found_message">Sono molto dispiaciuto! Prova di nuovo oppure ti tocca aggiungerlo</string>
     <string name="manually">Manualmente!</string>
     <string name="add_book">Aggiungi</string>
-    <string name="edit_profile">Modifia profilo</string>
+    <string name="add_book_button">Aggiungi libro</string>
+    <string name="edit_profile">Edita profilo</string>
     <string name="change_book_image">Aggiungi un\'immagine del libro</string>
     <string name="book_title_hint">Titolo</string>
     <string name="written_by_hint">Scritto da</string>

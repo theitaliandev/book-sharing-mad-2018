@@ -7,6 +7,14 @@
     tools:context=".Controller.AddBookDetailActivity"
     android:background="@drawable/gradient">
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:visibility="invisible"
+        android:elevation="1dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

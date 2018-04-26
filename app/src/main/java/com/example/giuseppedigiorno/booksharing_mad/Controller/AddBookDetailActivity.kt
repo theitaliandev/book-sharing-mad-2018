@@ -27,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -35,6 +36,7 @@ import kotlinx.android.synthetic.main.activity_add_book.*
 import kotlinx.android.synthetic.main.activity_add_book_detail.*
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.lang.Exception
 
 class AddBookDetailActivity : AppCompatActivity() {
 
@@ -103,6 +105,7 @@ class AddBookDetailActivity : AppCompatActivity() {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
             if (resultCode == Activity.RESULT_OK) {
+                progressBar.visibility = View.VISIBLE
                 val resultUri = result.uri
                 var userId = mCurrentUser!!.uid
                 var imageFile = File(resultUri.path)
@@ -127,10 +130,17 @@ class AddBookDetailActivity : AppCompatActivity() {
                                 book.bookImageUrl = task.result.downloadUrl.toString()
                                 Picasso.get()
                                         .load(book.bookImageUrl)
-                                        .into(editBookImage)
+                                        .into(editBookImage, object : Callback{
+                                            override fun onSuccess() {
+                                                progressBar.visibility = View.INVISIBLE
+                                            }
+
+                                            override fun onError(e: Exception?) {
+                                            }
+
+                                        })
                             }
                             }
-                Toast.makeText(this, getString(R.string.crop_ok), Toast.LENGTH_SHORT).show()
             }else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
                 Toast.makeText(this, "${getString(R.string.crop_not_ok)}${result.error}", Toast.LENGTH_LONG).show()
             }

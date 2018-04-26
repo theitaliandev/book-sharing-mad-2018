@@ -35,14 +35,14 @@
                     android:layout_height="35dp"
                     android:background="@drawable/ic_action_add_book"
                     android:layout_marginTop="15dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center"
                     android:onClick="addBookButtonPressed"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/add_book"
+                    android:layout_gravity="center"
+                    android:text="@string/add_book_button"
                     android:textStyle="bold"/>
             </LinearLayout>
 
@@ -65,6 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/edit_profile"
+                    android:layout_gravity="center"
                     android:textStyle="bold"/>
             </LinearLayout>
 
