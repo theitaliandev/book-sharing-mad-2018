@@ -52,4 +52,5 @@
     <string name="insert_email_and_password">Perfavore inserisci email e password</string>
     <string name="correct_email_and_password">Perfavore inserisci email e password corretti, o controlla la tua connessione internet</string>
     <string name="auth_failed">Autenticazione fallita</string>
+    <string name="check_ISBN_or_internet">Aggiungi l\'ISBN o controlla la tua connessione ad internet</string>
 </resources>

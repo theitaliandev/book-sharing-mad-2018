@@ -7,6 +7,27 @@
     tools:context=".Controller.AddBookActivity"
     android:background="@drawable/gradient">
 
+    <LinearLayout
+        android:onClick="backButtonPressed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_action_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/back"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
   <LinearLayout
       android:id="@+id/findBookLinearLayout"
       android:layout_width="match_parent"

@@ -26,6 +26,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:onClick="addBookButtonPressed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -35,8 +36,7 @@
                     android:layout_height="35dp"
                     android:background="@drawable/ic_action_add_book"
                     android:layout_marginTop="15dp"
-                    android:layout_gravity="center"
-                    android:onClick="addBookButtonPressed"/>
+                    android:layout_gravity="center" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -47,6 +47,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:onClick="editProfileBtnPressed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -58,8 +59,7 @@
                     android:layout_height="35dp"
                     android:background="@drawable/edit_profile"
                     android:layout_marginTop="15dp"
-                    android:layout_gravity="center"
-                    android:onClick="editProfileBtnPressed"/>
+                    android:layout_gravity="center" />
 
                 <TextView
                     android:layout_width="wrap_content"

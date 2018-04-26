@@ -1,25 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp">
+    android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:background="@drawable/list_view_item_border">
 
-        <TextView
-            android:id="@+id/bookTitleItem"
+        <ImageView
+            android:id="@+id/bookItemImage"
+            android:layout_width="70dp"
+            android:layout_height="100dp" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"/>
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
 
-        <TextView
-            android:id="@+id/bookAuthorItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/bookItemTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Il Profeta"
+                android:textStyle="bold"
+                android:singleLine="false"
+                android:textSize="16sp"
+                android:maxLines="2"/>
+            <TextView
+                android:id="@+id/bookItemAuthor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GiuseppeDi Giorno"
+                android:textSize="14dp"
+                android:layout_marginTop="2dp"/>
+            <TextView
+                android:id="@+id/bookItemMyReview"
+                android:layout_marginTop="7dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ajhgjhgajhgajhagjagajhgajhagjagjahgajhgajhagjagajhgajhagjagajgajgajhga"
+                android:maxLines="3"
+                android:textSize="14sp"
+                android:textStyle="italic"
+                android:textAlignment="center"/>
+        </LinearLayout>
+
+
 
     </LinearLayout>
 

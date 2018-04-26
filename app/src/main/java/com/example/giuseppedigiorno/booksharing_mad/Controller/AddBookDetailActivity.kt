@@ -40,7 +40,7 @@ import java.lang.Exception
 
 class AddBookDetailActivity : AppCompatActivity() {
 
-    var book = Book("", "", "", "", "", "")
+    var book = Book("", "", "", "", "", "", "")
     var prettyfiedTitle = ""
     private var mCurrentUser: FirebaseUser? = null
     private var mStorageRef: StorageReference? = null
@@ -168,6 +168,7 @@ class AddBookDetailActivity : AppCompatActivity() {
             bookObject.put("bookCategory", book.bookCategory)
             bookObject.put("bookMyReview", book.myBookReview)
             bookObject.put("bookImageUrl", book.bookImageUrl)
+            bookObject.put("bookThumbUrl", book.bookThumbUrl)
             val re =  Regex("[^A-Za-z0-9]")
             prettyfiedTitle = re.replace(book.bookTitle, "")
             mDatabase!!.child(prettyfiedTitle).setValue(bookObject)

@@ -24,7 +24,7 @@ import java.io.IOException
 class AddBookActivity : AppCompatActivity() {
 
     var barcodeNumber: String? = null
-    var book = Book("", "", "", "", "", "")
+    var book = Book("", "", "", "", "", "", "")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,17 +63,38 @@ class AddBookActivity : AppCompatActivity() {
                     val bookInfo =  gson.fromJson(body, Items::class.java)
                     if(bookInfo.totalItems > 0) {
                         val bookItem = bookInfo.items.get(0)
-                        val bookImageUrl = bookItem.volumeInfo.imageLinks.smallThumbnail
-                        book.bookTitle = bookItem.volumeInfo.title
-                        book.bookAuthor = bookItem.volumeInfo.authors[0]
-                        book.bookPublishedDate = bookItem.volumeInfo.publishedDate
-                        book.bookCategory = bookItem.volumeInfo.categories[0]
+                        if(!TextUtils.isEmpty(bookItem.volumeInfo.imageLinks.smallThumbnail)){
+                            book.bookThumbUrl = bookItem.volumeInfo.imageLinks.smallThumbnail
+                        }else{
+                            book.bookThumbUrl = ""
+                        }
+                        if(!TextUtils.isEmpty(bookItem.volumeInfo.title)){
+                            book.bookTitle = bookItem.volumeInfo.title
+                        }else{
+                            book.bookTitle = ""
+                        }
+                        if(bookItem.volumeInfo.authors != null){
+                            book.bookAuthor = bookItem.volumeInfo.authors[0]
+                        }else{
+                            book.bookAuthor = ""
+                        }
+                        if(!TextUtils.isEmpty(bookItem.volumeInfo.publishedDate)){
+                            book.bookPublishedDate = bookItem.volumeInfo.publishedDate
+                        }else{
+                            book.bookPublishedDate = ""
+                        }
+                        if(bookItem.volumeInfo.categories != null){
+                            book.bookCategory = bookItem.volumeInfo.categories[0]
+                        }else{
+                            book.bookCategory = ""
+                        }
+
                         runOnUiThread {
-                            if(!TextUtils.isEmpty(bookImageUrl) && !TextUtils.isEmpty(book.bookTitle) && !TextUtils.isEmpty(book.bookAuthor) && !TextUtils.isEmpty(book.bookPublishedDate) && !TextUtils.isEmpty(book.bookCategory)){
+                            if(!TextUtils.isEmpty(book.bookThumbUrl) || !TextUtils.isEmpty(book.bookTitle) || !TextUtils.isEmpty(book.bookAuthor) || !TextUtils.isEmpty(book.bookPublishedDate) || !TextUtils.isEmpty(book.bookCategory)){
                                 addBookManuallyLinearLayout.visibility = View.INVISIBLE
                                 bookInfoCardView.visibility = View.VISIBLE
                                 Picasso.get()
-                                        .load(bookImageUrl)
+                                        .load(book.bookThumbUrl)
                                         .into(bookImageView)
                                 bookTitleTextView.text = book.bookTitle
                                 writtenByTextView.text = getString(R.string.written_by) + book.bookAuthor
@@ -93,6 +114,8 @@ class AddBookActivity : AppCompatActivity() {
                 }
 
             })
+        }else{
+            Toast.makeText(this@AddBookActivity, getString(R.string.check_ISBN_or_internet), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -104,6 +127,11 @@ class AddBookActivity : AppCompatActivity() {
     fun addBookManuallyButtonPressed(view: View){
         var addBookDetailActivity = Intent(this@AddBookActivity, AddBookDetailActivity::class.java)
         startActivity(addBookDetailActivity)
+    }
+
+    fun backButtonPressed(view: View){
+        var showProfileActivity = Intent(this, ShowProfileActivity::class.java)
+        startActivity(showProfileActivity)
     }
 
 }

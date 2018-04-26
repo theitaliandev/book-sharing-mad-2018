@@ -12,21 +12,65 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/mylibrary"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="right"
-            android:layout_marginRight="20dp"/>
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:onClick="backButtonPressed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp">
+
+                <Button
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/ic_action_back"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/back"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:onClick="addBookButtonPressed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="15dp">
+
+                <Button
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/ic_action_add_book"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_book_button"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/bookListRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"/>
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="20dp"/>
 
 
     </LinearLayout>

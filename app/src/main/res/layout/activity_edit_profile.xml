@@ -12,13 +12,13 @@
         android:elevation="1dp">
 
         <LinearLayout
+            android:onClick="backButtonPressed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="15dp"
             android:orientation="vertical">
            <Button
-               android:onClick="backButtonPressed"
                android:layout_width="35dp"
                android:layout_height="35dp"
                android:layout_gravity="center"
@@ -32,6 +32,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:onClick="signOutButtonPressed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -39,7 +40,6 @@
             android:layout_marginRight="15dp"
             android:orientation="vertical">
             <Button
-                android:onClick="signOutButtonPressed"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_gravity="center"
@@ -154,9 +154,8 @@
             android:hint="@string/hint_bio"
             android:textColorHint="@android:color/darker_gray"
             android:textColor="@android:color/black"
-            android:inputType="textMultiLine"
-            android:singleLine="false"
-            android:maxLines="2"
+            android:inputType="text"
+            android:singleLine="true"
             android:padding="2dp"/>
 
         <EditText

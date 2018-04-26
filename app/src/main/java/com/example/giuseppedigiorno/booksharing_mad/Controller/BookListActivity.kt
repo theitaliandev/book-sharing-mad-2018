@@ -1,11 +1,13 @@
 package com.example.giuseppedigiorno.booksharing_mad.Controller
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.example.giuseppedigiorno.booksharing_mad.Model.BookItem
@@ -62,6 +64,16 @@ class BookListActivity : AppCompatActivity() {
         }
 
         mRecyclerView.adapter = adapter
+    }
+
+    fun addBookButtonPressed(view: View){
+        var addBookActivity = Intent(this, AddBookActivity::class.java)
+        startActivity(addBookActivity)
+    }
+
+    fun backButtonPressed(view: View){
+        var showProfileActivity = Intent(this, ShowProfileActivity::class.java)
+        startActivity(showProfileActivity)
     }
 
 

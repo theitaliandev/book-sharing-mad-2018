@@ -3,8 +3,9 @@ package com.example.giuseppedigiorno.booksharing_mad.Model
 import android.os.Parcel
 import android.os.Parcelable
 
-class Book constructor(var bookTitle: String, var bookAuthor: String, var bookCategory: String, var bookPublishedDate: String, var myBookReview: String, var bookImageUrl: String) : Parcelable {
+class Book constructor(var bookTitle: String, var bookAuthor: String, var bookCategory: String, var bookPublishedDate: String, var myBookReview: String, var bookImageUrl: String, var bookThumbUrl: String) : Parcelable {
     constructor(parcel: Parcel) : this(
+            parcel.readString(),
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
@@ -20,6 +21,7 @@ class Book constructor(var bookTitle: String, var bookAuthor: String, var bookCa
         parcel.writeString(bookPublishedDate)
         parcel.writeString(myBookReview)
         parcel.writeString(bookImageUrl)
+        parcel.writeString(bookThumbUrl)
     }
 
     override fun describeContents(): Int {
