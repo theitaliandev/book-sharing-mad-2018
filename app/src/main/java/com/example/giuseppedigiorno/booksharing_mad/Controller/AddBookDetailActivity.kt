@@ -39,6 +39,7 @@ import java.io.File
 class AddBookDetailActivity : AppCompatActivity() {
 
     var book = Book("", "", "", "", "", "")
+    var prettyfiedTitle = ""
     private var mCurrentUser: FirebaseUser? = null
     private var mStorageRef: StorageReference? = null
     private var mDatabase: DatabaseReference? = null
@@ -157,10 +158,13 @@ class AddBookDetailActivity : AppCompatActivity() {
             bookObject.put("bookCategory", book.bookCategory)
             bookObject.put("bookMyReview", book.myBookReview)
             bookObject.put("bookImageUrl", book.bookImageUrl)
-            mDatabase!!.setValue(bookObject)
+            val re =  Regex("[^A-Za-z0-9]")
+            prettyfiedTitle = re.replace(book.bookTitle, "")
+            mDatabase!!.child(prettyfiedTitle).setValue(bookObject)
                     .addOnCompleteListener { task ->
                         if(task.isSuccessful){
-                            Toast.makeText(this, "Book succesfully added!", Toast.LENGTH_LONG).show()
+                            var bookListActivity = Intent(this, BookListActivity::class.java)
+                            startActivity(bookListActivity)
                         }
                     }
         }else{

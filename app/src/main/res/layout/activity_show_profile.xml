@@ -223,6 +223,7 @@
                     android:weightSum="2">
 
                     <Button
+                        android:onClick="myBooksButtonClicked"
                         android:layout_width="125dp"
                         android:layout_height="wrap_content"
                         android:text="@string/my_books_btn"

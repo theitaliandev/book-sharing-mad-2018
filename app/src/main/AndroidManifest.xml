@@ -30,7 +30,8 @@
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".Controller.AddBookActivity" />
         <activity android:name=".Controller.ZBarScannerActivity" />
-        <activity android:name=".Controller.AddBookDetailActivity"></activity>
+        <activity android:name=".Controller.AddBookDetailActivity" />
+        <activity android:name=".Controller.BookListActivity"></activity>
     </application>
 
 </manifest>

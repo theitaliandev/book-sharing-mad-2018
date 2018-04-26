@@ -95,4 +95,9 @@ class ShowProfileActivity : AppCompatActivity() {
         startActivity(addBookActivity)
     }
 
+    fun myBooksButtonClicked(view: View) {
+        var bookListActivity = Intent(this, BookListActivity::class.java)
+        startActivity(bookListActivity)
+    }
+
 }
