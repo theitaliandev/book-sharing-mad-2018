@@ -18,7 +18,6 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:onClick="backButtonPressed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -29,17 +28,18 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:background="@drawable/ic_action_back"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:onClick="backButtonPressed"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/back"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:onClick="backButtonPressed"/>
             </LinearLayout>
 
             <LinearLayout
-                android:onClick="addBookButtonPressed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -51,13 +51,15 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:background="@drawable/ic_action_add_book"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:onClick="addBookButtonPressed"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/add_book_button"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:onClick="addBookButtonPressed"/>
 
             </LinearLayout>
 

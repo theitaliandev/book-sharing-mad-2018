@@ -61,6 +61,8 @@ class RegisterActivity : AppCompatActivity() {
                                                 Toast.LENGTH_SHORT).show()
                                     }
                                 }
+                    }else{
+                        Toast.makeText(this, getString(R.string.registration_alert), Toast.LENGTH_LONG).show()
                     }
                 }
     }

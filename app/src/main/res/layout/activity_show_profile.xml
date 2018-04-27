@@ -26,12 +26,12 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:onClick="addBookButtonPressed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <Button
+                    android:onClick="addBookButtonPressed"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:background="@drawable/ic_action_add_book"
@@ -39,6 +39,7 @@
                     android:layout_gravity="center" />
 
                 <TextView
+                    android:onClick="addBookButtonPressed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -47,13 +48,13 @@
             </LinearLayout>
 
             <LinearLayout
-                android:onClick="editProfileBtnPressed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_alignParentRight="true">
 
                 <Button
+                    android:onClick="editProfileBtnPressed"
                     android:id="@+id/editProfileBtn"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
@@ -62,6 +63,7 @@
                     android:layout_gravity="center" />
 
                 <TextView
+                    android:onClick="editProfileBtnPressed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/edit_profile"
@@ -81,6 +83,7 @@
 
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:onClick="editProfileBtnPressed"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/profile_image"
                 android:layout_width="150dp"

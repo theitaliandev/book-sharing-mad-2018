@@ -47,7 +47,8 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center_horizontal"
-          android:text="@string/tap_to_scan_the_isbn"/>
+          android:text="@string/tap_to_scan_the_isbn"
+          android:onClick="startScanButtonPressed"/>
 
       <EditText
           android:id="@+id/isbnEditText"
@@ -68,6 +69,7 @@
           android:onClick="findBookButtonPressed"/>
 
       <TextView
+          android:onClick="findBookButtonPressed"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="@string/tap_to_find_the_book"

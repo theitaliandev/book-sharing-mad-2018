@@ -12,18 +12,19 @@
         android:elevation="1dp">
 
         <LinearLayout
-            android:onClick="backButtonPressed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="15dp"
             android:orientation="vertical">
            <Button
+               android:onClick="backButtonPressed"
                android:layout_width="35dp"
                android:layout_height="35dp"
                android:layout_gravity="center"
                android:background="@drawable/ic_action_back"/>
             <TextView
+                android:onClick="backButtonPressed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/back"
@@ -32,7 +33,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:onClick="signOutButtonPressed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -40,11 +40,13 @@
             android:layout_marginRight="15dp"
             android:orientation="vertical">
             <Button
+                android:onClick="signOutButtonPressed"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_gravity="center"
                 android:background="@drawable/ic_action_sign_out"/>
             <TextView
+                android:onClick="signOutButtonPressed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/signout"
@@ -89,7 +91,8 @@
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
             app:civ_border_width="1dp"
-            app:civ_border_color="#FFFFFF"/>
+            app:civ_border_color="#FFFFFF"
+            android:onClick="changeProfileImageBtnPressed"/>
 
         <Button
             android:id="@+id/changeProfileImageBtn"

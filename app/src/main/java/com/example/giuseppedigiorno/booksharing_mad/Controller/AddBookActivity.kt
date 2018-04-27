@@ -97,9 +97,9 @@ class AddBookActivity : AppCompatActivity() {
                                         .load(book.bookThumbUrl)
                                         .into(bookImageView)
                                 bookTitleTextView.text = book.bookTitle
-                                writtenByTextView.text = getString(R.string.written_by) + book.bookAuthor
-                                categoryBooktextView.text = getString(R.string.category_) + book.bookCategory
-                                bookPublishedTextView.text = getString(R.string.published_in) + book.bookPublishedDate
+                                writtenByTextView.text = getString(R.string.written_by) + " " + book.bookAuthor
+                                categoryBooktextView.text = getString(R.string.category_) + " " + book.bookCategory
+                                bookPublishedTextView.text = getString(R.string.published_in) + " " + book.bookPublishedDate
                             }
                         }
                     }else{
