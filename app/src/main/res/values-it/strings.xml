@@ -42,9 +42,9 @@
     <string name="display_name">Nome</string>
     <string name="create_user">Crea</string>
     <string name="camera_permission">I permessi della fotocamera sono richiesti per scannerizzare l\'ISBN</string>
-    <string name="written_by">Scritto da:</string>
-    <string name="category_">Categoria:</string>
-    <string name="published_in">Publicato nel:</string>
+    <string name="written_by">Scritto da: </string>
+    <string name="category_">Categoria: </string>
+    <string name="published_in">Publicato nel: </string>
     <string name="book_title_needed">Abbiamo bisogno del Titolo del libro per salvare correttamente l\'immagine </string>
     <string name="modify_image_internet_nedeed">Per modificare l\'immagine del libro è necessaria una connessione internet</string>
     <string name="fill_the_fields">Completa tutti i campi richiesti!</string>
