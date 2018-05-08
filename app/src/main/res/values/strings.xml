@@ -4,7 +4,7 @@
     <string name="hint_full_name">Full Name</string>
     <string name="hint_favourite_books">Favourite Book Generes</string>
     <string name="hint_bio">Short Bio</string>
-    <string name="hint_city">City</string>
+    <string name="hint_city">City, </string>
     <string name="update_profile_btn">Update Profile</string>
     <string name="rating">rating</string>
     <string name="shared_books">shared books</string>

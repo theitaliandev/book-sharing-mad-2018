@@ -7,6 +7,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.location.Geocoder
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.net.Uri
@@ -23,6 +24,8 @@ import android.widget.Toast
 import com.example.giuseppedigiorno.booksharing_mad.Model.User
 import com.example.giuseppedigiorno.booksharing_mad.R
 import com.example.giuseppedigiorno.booksharing_mad.Utilities.EXTRA_USER
+import com.firebase.geofire.GeoFire
+import com.firebase.geofire.GeoLocation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -46,21 +49,33 @@ import kotlinx.android.synthetic.main.activity_edit_profile.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.lang.Exception
+import java.util.*
 
 class EditProfileActivity : AppCompatActivity() {
 
     lateinit var user: User
     private var mAuth: FirebaseAuth? = null
     private var mCurrentUser: FirebaseUser? = null
+    private var userId: String? = null
     private var mStorageRef: StorageReference? = null
     private var mDatabase: DatabaseReference?  = null
+    private var mGeoDatabase: DatabaseReference? = null
+    private var geoFire: GeoFire? = null
+    private var geoLocation: GeoLocation? = null
+    private var geocoder: Geocoder? = null
+    private var latitude: Double? = null
+    private var longitude: Double? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
+        geocoder = Geocoder(this, Locale.getDefault())
         mAuth = FirebaseAuth.getInstance()
         mCurrentUser = FirebaseAuth.getInstance().currentUser
-        var userId = mCurrentUser!!.uid
+        userId = mCurrentUser!!.uid
+        mGeoDatabase = FirebaseDatabase.getInstance().reference
+                .child("geofire")
+        geoFire = GeoFire(mGeoDatabase)
         mDatabase = FirebaseDatabase.getInstance().reference
                 .child("users")
                 .child(userId)
@@ -90,7 +105,7 @@ class EditProfileActivity : AppCompatActivity() {
         nameEditTxt.limitLength(30)
         favouriteBooksGeneresEditTxt.limitLength(30)
         bioEditTxt.limitLength(100)
-        cityEditTxt.limitLength(30)
+        cityEditTxt.limitLength(100)
     }
 
     private fun checkPermissions() {
@@ -221,22 +236,35 @@ class EditProfileActivity : AppCompatActivity() {
         user.favouriteBookGeneres = favouriteBooksGeneresEditTxt.text.toString().trim()
         user.bio = bioEditTxt.text.toString().trim()
         user.city = cityEditTxt.text.toString().trim()
-        if (!TextUtils.isEmpty(user.name) && !TextUtils.isEmpty(user.favouriteBookGeneres) && !TextUtils.isEmpty(user.bio) && !TextUtils.isEmpty(user.city)) {
-            var updateObject = HashMap<String, Any>()
-            updateObject.put("name", user.name)
-            updateObject.put("favouriteBooksGeneres", user.favouriteBookGeneres)
-            updateObject.put("bio", user.bio)
-            updateObject.put("city", user.city)
-            mDatabase!!.updateChildren(updateObject).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.i("update_profile", "Profile succesfully updated")
+        if(!TextUtils.isEmpty(user.city)) {
+            var userLocation = geocoder!!.getFromLocationName(user.city, 1)
+            if(!userLocation.isEmpty()) {
+                if (!TextUtils.isEmpty(user.name) && !TextUtils.isEmpty(user.favouriteBookGeneres) && !TextUtils.isEmpty(user.bio)) {
+                    latitude = userLocation[0].latitude
+                    longitude = userLocation[0].longitude
+                    geoLocation = GeoLocation(latitude!!, longitude!!)
+                    geoFire!!.setLocation(userId, geoLocation)
+                    var updateObject = HashMap<String, Any>()
+                    updateObject.put("name", user.name)
+                    updateObject.put("favouriteBooksGeneres", user.favouriteBookGeneres)
+                    updateObject.put("bio", user.bio)
+                    updateObject.put("city", user.city)
+                    mDatabase!!.updateChildren(updateObject).addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Log.i("update_profile", "Profile succesfully updated")
+                        }else{
+                        }
+                    }
+                    var showProfileActivity = Intent(this, ShowProfileActivity::class.java)
+                    startActivity(showProfileActivity)
                 }else{
+                    Toast.makeText(this, getString(R.string.fill_the_fields), Toast.LENGTH_SHORT).show()
                 }
+            }else{
+                Toast.makeText(this, "Please enter a correct city name", Toast.LENGTH_LONG).show()
             }
-            var showProfileActivity = Intent(this, ShowProfileActivity::class.java)
-            startActivity(showProfileActivity)
         }else{
-            Toast.makeText(this, getString(R.string.fill_the_fields), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "City is missing", Toast.LENGTH_LONG).show()
         }
 
     }

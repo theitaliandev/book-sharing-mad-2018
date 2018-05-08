@@ -1,18 +1,38 @@
 package com.example.giuseppedigiorno.booksharing_mad.Controller
 
+import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
+import android.location.LocationProvider
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
+import android.support.v7.app.AlertDialog
 import android.text.InputFilter
 import android.text.TextUtils
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import com.example.giuseppedigiorno.booksharing_mad.Model.User
 import com.example.giuseppedigiorno.booksharing_mad.R
 import com.example.giuseppedigiorno.booksharing_mad.Utilities.EXTRA_USER
+import com.firebase.geofire.GeoFire
+import com.firebase.geofire.GeoLocation
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.LocationSettingsRequest
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_show_profile.*
 
@@ -32,7 +52,6 @@ class ShowProfileActivity : AppCompatActivity() {
         mDatabase = FirebaseDatabase.getInstance().reference
                 .child("users")
                 .child(userId)
-
         mDatabase!!.addValueEventListener( object: ValueEventListener{
             override fun onDataChange(snap: DataSnapshot?) {
                 user.name = snap!!.child("name").value.toString()

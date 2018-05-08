@@ -5,7 +5,7 @@
     <string name="hint_full_name">Nome</string>
     <string name="hint_favourite_books">Generi letterari preferiti</string>
     <string name="hint_bio">Breve biografia</string>
-    <string name="hint_city">Città</string>
+    <string name="hint_city">Città, Via Numero Civico</string>
     <string name="update_profile_btn">Aggiorna</string>
     <string name="rating">voto</string>
     <string name="shared_books">libri condivisi</string>
