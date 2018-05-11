@@ -55,4 +55,5 @@
     <string name="registration_alert">Please use a valid email and a strong password, or check your internet connection</string>
     <string name="title_activity_maps">Map</string>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCgzn-troqMxR31GY4W9rIQJfIG7Zgr-t0</string>
+    <string name="book_not_near_to_you">The book you are looking for it\'s not near to you</string>
 </resources>

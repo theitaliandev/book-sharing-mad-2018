@@ -1,8 +1,10 @@
 package com.example.giuseppedigiorno.booksharing_mad.Controller
 
+import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
 import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
@@ -67,5 +69,10 @@ class LoginActivity : AppCompatActivity() {
         if(mAuthListener!=null){
             mAuth!!.removeAuthStateListener(mAuthListener!!)
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        ActivityCompat.finishAffinity(this)
     }
 }

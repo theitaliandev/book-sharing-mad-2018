@@ -54,5 +54,6 @@
     <string name="auth_failed">Autenticazione fallita</string>
     <string name="check_ISBN_or_internet">Aggiungi l\'ISBN o controlla la tua connessione ad internet</string>
     <string name="registration_alert">Inserisci una email valida ed una password sicura, oppura controlla la tua connessione ad internet</string>
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCgzn-troqMxR31GY4W9rIQJfIG7Zgr-t0</string>
+    <string name="book_not_near_to_you">Il libro che stai cercando non è nelle vicinanze</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

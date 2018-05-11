@@ -127,7 +127,10 @@ class SearchBookActivity : AppCompatActivity() {
                                 geoQuery!!.addGeoQueryEventListener( object : GeoQueryEventListener {
                                     override fun onGeoQueryReady() {
                                         if(userIdNearby.isNotEmpty() && !complete){
+                                            println(userIdNearby)
+                                            println(complete)
                                             for(userId in userIdNearby) {
+                                                println(userId)
                                                 mBookDatabase.child(userId).child(bookFoundTitle)
                                                         .addValueEventListener( object : ValueEventListener {
                                                             override fun onDataChange(snap: DataSnapshot?) {
@@ -135,18 +138,19 @@ class SearchBookActivity : AppCompatActivity() {
                                                                     mapDataItem = MapData(userId, snap.child("bookTitle").value.toString())
                                                                     mapData.add(index, mapDataItem)
                                                                     index ++
-                                                                }else if(mapData.isNotEmpty()) {
-                                                                    var mapActivity = Intent(this@SearchBookActivity, MapsActivity::class.java)
-                                                                    mapActivity.putExtra(EXTRA_MAP, ArrayList(mapData))
-                                                                    startActivity(mapActivity)
-                                                                }else{
-                                                                    complete = true
-                                                                    if (mapData.isEmpty()){
-                                                                        Toast.makeText(this@SearchBookActivity, "The book you are looking for it's not near to you", Toast.LENGTH_SHORT).show()
-                                                                        complete = false
+                                                                    }else if(mapData.isNotEmpty()) {
+                                                                        var mapActivity = Intent(this@SearchBookActivity, MapsActivity::class.java)
+                                                                        mapActivity.putExtra(EXTRA_MAP, ArrayList(mapData))
+                                                                        startActivity(mapActivity)
+                                                                    }else{
+                                                                        complete = true
+                                                                        if (mapData.isEmpty()){
+                                                                            Toast.makeText(this@SearchBookActivity, "The book you are looking for it's not near to you", Toast.LENGTH_SHORT).show()
+                                                                            complete = false
+                                                                        }
                                                                     }
+
                                                                 }
-                                                            }
                                                             override fun onCancelled(p0: DatabaseError?) {
                                                             }
 
@@ -154,6 +158,7 @@ class SearchBookActivity : AppCompatActivity() {
                                             }
 
                                             }
+
                                     }
 
                                     override fun onKeyEntered(key: String?, location: GeoLocation?) {
