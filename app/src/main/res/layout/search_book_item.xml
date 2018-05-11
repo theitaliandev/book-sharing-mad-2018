@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:backgroundTint="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:background="@drawable/list_view_item_border">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+            <TextView
+                android:id="@+id/searchBookItemTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Il Profeta"
+                android:textStyle="bold"
+                android:singleLine="false"
+                android:textSize="16sp"
+                android:maxLines="2"
+                android:textColor="@android:color/black"/>
+            <TextView
+                android:id="@+id/searchBookItemAuthor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GiuseppeDi Giorno"
+                android:textSize="14dp"
+                android:layout_marginTop="2dp"
+                android:textColor="@android:color/darker_gray"/>
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

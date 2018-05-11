@@ -10,7 +10,7 @@
     <string name="rating">Rating</string>
     <string name="shared_books">Paylashdiklariniz</string>
     <string name="my_books_btn">Kitaplarim</string>
-    <string name="contact_me_btn">Ulashma</string>
+    <string name="find_book_btn">Ulashma</string>
     <string name="not_all_permission_granted">Deyishtirme hakiniz yoktur</string>
     <string name="permission_rationale_title">Camera and Gallery izni gerekli</string>
     <string name="permission_rationale_message">Modify icin cameraniza ulashma izni gerek</string>
@@ -53,4 +53,5 @@
     <string name="correct_email_and_password">Doru emailiniz ve internetinizi check edin</string>
     <string name="auth_failed">Doru taninlanma fail oldu</string>
     <string name="check_ISBN_or_internet">ISBN ve ya interneti check edin</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCgzn-troqMxR31GY4W9rIQJfIG7Zgr-t0</string>
 </resources>

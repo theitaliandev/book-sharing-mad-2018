@@ -44,12 +44,15 @@ class RegisterActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         var currentUser = mAuth!!.currentUser
                         var userId = currentUser!!.uid
-                        var userObject = HashMap<String, String>()
+                        var userObject = HashMap<String, Any>()
                         userObject.put("name", name)
                         userObject.put("favouriteBooksGeneres", "")
                         userObject.put("bio", "")
                         userObject.put("city", "")
                         userObject.put("photoUrl", "")
+                        userObject.put("address", "")
+                        userObject.put("latitude", 0.0)
+                        userObject.put("longitude", 0.0)
                         mDatabase!!.child("users").child(userId).setValue(userObject)
                                 .addOnCompleteListener { task ->
                                     if(task.isSuccessful){

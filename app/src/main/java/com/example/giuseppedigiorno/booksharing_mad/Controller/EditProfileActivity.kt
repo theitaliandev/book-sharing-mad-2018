@@ -63,8 +63,6 @@ class EditProfileActivity : AppCompatActivity() {
     private var geoFire: GeoFire? = null
     private var geoLocation: GeoLocation? = null
     private var geocoder: Geocoder? = null
-    private var latitude: Double? = null
-    private var longitude: Double? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,8 +89,8 @@ class EditProfileActivity : AppCompatActivity() {
         if(!TextUtils.isEmpty(user.bio)){
             bioEditTxt.setText(user.bio)
         }
-        if(!TextUtils.isEmpty(user.city)){
-            cityEditTxt.setText(user.city)
+        if(!TextUtils.isEmpty(user.address)){
+            cityEditTxt.setText(user.address)
         }
         if(!TextUtils.isEmpty(user.photoUrl)){
             Picasso.get()
@@ -235,20 +233,30 @@ class EditProfileActivity : AppCompatActivity() {
         user.name = nameEditTxt.text.toString().trim()
         user.favouriteBookGeneres = favouriteBooksGeneresEditTxt.text.toString().trim()
         user.bio = bioEditTxt.text.toString().trim()
-        user.city = cityEditTxt.text.toString().trim()
-        if(!TextUtils.isEmpty(user.city)) {
-            var userLocation = geocoder!!.getFromLocationName(user.city, 1)
+        user.address = cityEditTxt.text.toString().trim()
+        if(!TextUtils.isEmpty(user.address)) {
+            var userLocation = geocoder!!.getFromLocationName(user.address, 1)
             if(!userLocation.isEmpty()) {
                 if (!TextUtils.isEmpty(user.name) && !TextUtils.isEmpty(user.favouriteBookGeneres) && !TextUtils.isEmpty(user.bio)) {
-                    latitude = userLocation[0].latitude
-                    longitude = userLocation[0].longitude
-                    geoLocation = GeoLocation(latitude!!, longitude!!)
+                    user.latitude = userLocation[0].latitude
+                    user.longitude = userLocation[0].longitude
+                    if(!TextUtils.equals(userLocation[0].locality, null)) {
+                        user.city = userLocation[0].locality
+                    }else{
+                        user.city = userLocation[0].subAdminArea
+                    }
+                    user.countryCode = userLocation[0].countryCode
+                    geoLocation = GeoLocation(user.latitude!!, user.longitude!!)
                     geoFire!!.setLocation(userId, geoLocation)
                     var updateObject = HashMap<String, Any>()
                     updateObject.put("name", user.name)
                     updateObject.put("favouriteBooksGeneres", user.favouriteBookGeneres)
                     updateObject.put("bio", user.bio)
                     updateObject.put("city", user.city)
+                    updateObject.put("address", user.address)
+                    updateObject.put("countryCode", user.countryCode)
+                    updateObject.put("latitude", user.latitude)
+                    updateObject.put("longitude", user.longitude)
                     mDatabase!!.updateChildren(updateObject).addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             Log.i("update_profile", "Profile succesfully updated")

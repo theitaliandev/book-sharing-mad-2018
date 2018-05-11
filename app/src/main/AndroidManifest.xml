@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Controller.LoginActivity"
+        <activity
+            android:name=".Controller.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,30 +26,51 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controller.RegisterActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Controller.ShowProfileActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Controller.EditProfileActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Controller.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Controller.ShowProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Controller.EditProfileActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Controller.AddBookActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".Controller.ZBarScannerActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".Controller.AddBookDetailActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".Controller.BookListActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/Base.Theme.AppCompat" />
+        <activity
+            android:name=".Controller.AddBookActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Controller.ZBarScannerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Controller.AddBookDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Controller.BookListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Controller.SearchBookActivity"
+            android:screenOrientation="portrait"></activity>
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
 
-        </activity>
+        <activity
+            android:name=".Controller.MapsActivity"
+            android:label="@string/title_activity_maps"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

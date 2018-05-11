@@ -5,12 +5,12 @@
     <string name="hint_full_name">Nome</string>
     <string name="hint_favourite_books">Generi letterari preferiti</string>
     <string name="hint_bio">Breve biografia</string>
-    <string name="hint_city">Città, Via Numero Civico</string>
+    <string name="hint_city">Il tuo indirizzo (Città, Via Nr.Civico)</string>
     <string name="update_profile_btn">Aggiorna</string>
     <string name="rating">voto</string>
     <string name="shared_books">libri condivisi</string>
     <string name="my_books_btn">Miei libri</string>
-    <string name="contact_me_btn">Contattami</string>
+    <string name="find_book_btn">Trova Libro</string>
     <string name="not_all_permission_granted">Non tutti i permessi sono garantiti. Si prega di modificarli in Impostazioni</string>
     <string name="permission_rationale_title">I permessi di fotocamera e galleria sono richiesti</string>
     <string name="permission_rationale_message">Abbiamo bisogno di accedere alla fotocamera ed alla gallaeria per consentirti di cambiare l\'immagine del profilo</string>
@@ -54,4 +54,5 @@
     <string name="auth_failed">Autenticazione fallita</string>
     <string name="check_ISBN_or_internet">Aggiungi l\'ISBN o controlla la tua connessione ad internet</string>
     <string name="registration_alert">Inserisci una email valida ed una password sicura, oppura controlla la tua connessione ad internet</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCgzn-troqMxR31GY4W9rIQJfIG7Zgr-t0</string>
 </resources>

@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.Query
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
@@ -42,9 +43,11 @@ class AddBookDetailActivity : AppCompatActivity() {
 
     var book = Book("", "", "", "", "", "", "")
     var prettyfiedTitle = ""
+    var firebaseSearchQuery: Query? = null
     private var mCurrentUser: FirebaseUser? = null
     private var mStorageRef: StorageReference? = null
     private var mDatabase: DatabaseReference? = null
+    private var mSearchDatabase: DatabaseReference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +57,8 @@ class AddBookDetailActivity : AppCompatActivity() {
         mDatabase = FirebaseDatabase.getInstance().reference
                 .child("books")
                 .child(userId)
+        mSearchDatabase = FirebaseDatabase.getInstance().reference
+                .child("searchBooks")
         mStorageRef = FirebaseStorage.getInstance().reference
 
         bookTitleEditTxt.limitLength(50)
@@ -174,6 +179,10 @@ class AddBookDetailActivity : AppCompatActivity() {
             mDatabase!!.child(prettyfiedTitle).setValue(bookObject)
                     .addOnCompleteListener { task ->
                         if(task.isSuccessful){
+                            var bookSearchObject = HashMap<String, Any>()
+                            bookSearchObject.put("title", book.bookTitle)
+                            bookSearchObject.put("author", book.bookAuthor)
+                            mSearchDatabase!!.child(prettyfiedTitle).setValue(bookSearchObject)
                             var bookListActivity = Intent(this, BookListActivity::class.java)
                             startActivity(bookListActivity)
                         }
@@ -181,8 +190,8 @@ class AddBookDetailActivity : AppCompatActivity() {
         }else{
             Toast.makeText(this, getString(R.string.fill_the_fields), Toast.LENGTH_LONG).show()
         }
+                }
 
-    }
     fun EditText.limitLength(maxLength: Int){
         filters = arrayOf(InputFilter.LengthFilter(maxLength))
     }

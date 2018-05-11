@@ -42,7 +42,7 @@ class ShowProfileActivity : AppCompatActivity() {
     private var mDatabase: DatabaseReference?  = null
     private var mCurrentUser: FirebaseUser? = null
 
-    var user = User("","","","","")
+    var user = User("","","","","", "", 0.0, 0.0, "")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +59,8 @@ class ShowProfileActivity : AppCompatActivity() {
                 user.bio = snap.child("bio").value.toString()
                 user.city = snap.child("city").value.toString()
                 user.photoUrl = snap.child("photoUrl").value.toString()
+                user.address = snap.child("address").value.toString()
+                user.countryCode = snap.child("countryCode").value.toString()
 
                 if(!TextUtils.isEmpty(user.photoUrl)){
                     Picasso.get()
@@ -83,8 +85,8 @@ class ShowProfileActivity : AppCompatActivity() {
                 }else{
                     bioTxt.text = getString(R.string.hint_bio)
                 }
-                if(!TextUtils.isEmpty(user.city)){
-                    cityTxt.text = user.city
+                if(!TextUtils.isEmpty(user.city) && !TextUtils.isEmpty(user.countryCode)){
+                    cityTxt.text = "${user.city}, ${user.countryCode}"
                 }else{
                     cityTxt.text = getString(R.string.hint_city)
                 }
@@ -110,6 +112,11 @@ class ShowProfileActivity : AppCompatActivity() {
     fun myBooksButtonClicked(view: View) {
         var bookListActivity = Intent(this, BookListActivity::class.java)
         startActivity(bookListActivity)
+    }
+
+    fun findABookButtonPressed(view: View) {
+        var searchBookActivity = Intent(this, SearchBookActivity::class.java)
+        startActivity(searchBookActivity)
     }
 
 }

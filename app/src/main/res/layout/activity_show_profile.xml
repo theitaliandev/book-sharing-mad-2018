@@ -239,10 +239,11 @@
                         android:layout_marginRight="10dp"/>
 
                     <Button
+                        android:onClick="findABookButtonPressed"
                         android:layout_width="125dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/button_outline_end_grad"
-                        android:text="@string/contact_me_btn"
+                        android:text="@string/find_book_btn"
                         android:textColor="@color/colorPrimary"
                         android:layout_weight="1"
                         android:layout_marginTop="5dp"
