@@ -13,11 +13,18 @@ import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.text.InputFilter
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import com.algolia.search.saas.AlgoliaException
+import com.algolia.search.saas.Client
+import com.algolia.search.saas.CompletionHandler
+import com.algolia.search.saas.Index
 import com.example.giuseppedigiorno.booksharing_mad.Model.Book
 import com.example.giuseppedigiorno.booksharing_mad.R
+import com.example.giuseppedigiorno.booksharing_mad.Utilities.ALGOLIA_API_KEY
+import com.example.giuseppedigiorno.booksharing_mad.Utilities.ALGOLIA_APPLICATION_ID
 import com.example.giuseppedigiorno.booksharing_mad.Utilities.EXTRA_BOOK
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -35,6 +42,7 @@ import com.theartofdev.edmodo.cropper.CropImageView
 import id.zelory.compressor.Compressor
 import kotlinx.android.synthetic.main.activity_add_book.*
 import kotlinx.android.synthetic.main.activity_add_book_detail.*
+import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.lang.Exception
@@ -43,15 +51,19 @@ class AddBookDetailActivity : AppCompatActivity() {
 
     var book = Book("", "", "", "", "", "", "")
     var prettyfiedTitle = ""
-    var firebaseSearchQuery: Query? = null
     private var mCurrentUser: FirebaseUser? = null
     private var mStorageRef: StorageReference? = null
     private var mDatabase: DatabaseReference? = null
     private var mSearchDatabase: DatabaseReference? = null
+    private var client: Client? = null
+    private var index: Index? = null
+    private var query: com.algolia.search.saas.Query? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_book_detail)
+        client = Client(ALGOLIA_APPLICATION_ID, ALGOLIA_API_KEY)
+        index = client!!.getIndex("books")
         mCurrentUser = FirebaseAuth.getInstance().currentUser
         var userId = mCurrentUser!!.uid
         mDatabase = FirebaseDatabase.getInstance().reference
@@ -182,7 +194,17 @@ class AddBookDetailActivity : AppCompatActivity() {
                             var bookSearchObject = HashMap<String, Any>()
                             bookSearchObject.put("title", book.bookTitle)
                             bookSearchObject.put("author", book.bookAuthor)
+                            query = com.algolia.search.saas.Query(book.bookTitle)
                             mSearchDatabase!!.child(prettyfiedTitle).setValue(bookSearchObject)
+                            index!!.searchAsync(query, { jsonObject, algoliaException ->
+                                println(jsonObject)
+                                if(jsonObject["nbHits"] == 0){
+                                    index!!.addObjectAsync(JSONObject()
+                                            .put("title", book.bookTitle)
+                                            .put("author", book.bookAuthor), { jsonObject, algoliaException ->
+                                })
+                                }
+                            })
                             var bookListActivity = Intent(this, BookListActivity::class.java)
                             startActivity(bookListActivity)
                         }

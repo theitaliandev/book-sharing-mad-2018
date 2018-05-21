@@ -16,9 +16,15 @@ import android.view.ViewAnimationUtils
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import com.algolia.search.saas.Client
+import com.algolia.search.saas.CompletionHandler
+import com.algolia.search.saas.Index
+import com.example.giuseppedigiorno.booksharing_mad.Adapters.SearchBooksRecyclerAdapter
 import com.example.giuseppedigiorno.booksharing_mad.Model.MapData
 import com.example.giuseppedigiorno.booksharing_mad.Model.SearchBookItem
 import com.example.giuseppedigiorno.booksharing_mad.R
+import com.example.giuseppedigiorno.booksharing_mad.Utilities.ALGOLIA_API_KEY
+import com.example.giuseppedigiorno.booksharing_mad.Utilities.ALGOLIA_APPLICATION_ID
 import com.example.giuseppedigiorno.booksharing_mad.Utilities.EXTRA_MAP
 import com.example.giuseppedigiorno.booksharing_mad.ViewHolder.SearchBookHolder
 import com.firebase.geofire.GeoFire
@@ -31,6 +37,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_search_book.*
+import org.json.JSONArray
+import org.json.JSONObject
 
 class SearchBookActivity : AppCompatActivity() {
 
@@ -52,10 +60,20 @@ class SearchBookActivity : AppCompatActivity() {
     var mapData = mutableListOf<MapData>()
     var mapDataItem = MapData("", "")
     var complete = false
+    private var index: Index? = null
+    private var client: Client? = null
+    private var queryAlgolia: com.algolia.search.saas.Query? = null
+    private var jsonArray: JSONArray? = null
+    private var jsonObjectAlgolia: JSONObject? = null
+    private var searchBookList = ArrayList<SearchBookItem>()
+    var i = 0
+    var searchBookItem = SearchBookItem("", "")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_book)
+        client = Client(ALGOLIA_APPLICATION_ID, ALGOLIA_API_KEY)
+        index = client!!.getIndex("books")
         mCurrentUser = FirebaseAuth.getInstance().currentUser
         userId = mCurrentUser!!.uid
         mBookDatabase = FirebaseDatabase.getInstance().reference
@@ -91,14 +109,14 @@ class SearchBookActivity : AppCompatActivity() {
         searchTerm = searchEditText.text.toString().capitalize()
         if(!TextUtils.isEmpty(searchTerm)) {
             hideKeyboard()
-            searchBook(searchTerm!!)
+            searchBookWithAlgolia(searchTerm!!)
         }else{
             Toast.makeText(this, "Insert the title of the book you are looking for", Toast.LENGTH_LONG).show()
         }
     }
 
 
-  private fun searchBook(term: String){
+ /* private fun searchBook(term: String){
             query = mDatabase
                     .orderByChild("title").startAt(term).endAt(term + "\uf88f")
 
@@ -184,7 +202,27 @@ class SearchBookActivity : AppCompatActivity() {
                 }
             mRecyclerView.adapter = adapter
 
+            }*/
+
+    private fun searchBookWithAlgolia(term: String) {
+        searchBookList = ArrayList()
+        val adapter = SearchBooksRecyclerAdapter(this, searchBookList)
+        mRecyclerView.adapter = adapter
+        queryAlgolia = com.algolia.search.saas.Query(term).setAttributesToRetrieve("title", "author").setHitsPerPage(50)
+        index!!.searchAsync(queryAlgolia, { jsonObject, algoliaException ->
+            if(jsonObject["nbHits"] != 0) {
+                jsonArray = jsonObject.getJSONArray("hits")
+                for (i in 0..(jsonArray!!.length() - 1)) {
+                    jsonObjectAlgolia = jsonArray!!.getJSONObject(i)
+                    searchBookItem.title = jsonObjectAlgolia!!.getString("title")
+                    searchBookItem.author = jsonObjectAlgolia!!.getString("author")
+                    searchBookList.add(SearchBookItem(searchBookItem.title, searchBookItem.author))
+                }
+                val adapter = SearchBooksRecyclerAdapter(this, searchBookList)
+                mRecyclerView.adapter = adapter
             }
+        })
+    }
 
 
     fun backButtonPressed(view: View) {
