@@ -1,23 +1,17 @@
 package com.example.giuseppedigiorno.booksharing_mad.Controller
 
 import android.app.Activity
-import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewAnimationUtils
-import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.algolia.search.saas.Client
-import com.algolia.search.saas.CompletionHandler
 import com.algolia.search.saas.Index
 import com.example.giuseppedigiorno.booksharing_mad.Adapters.SearchBooksRecyclerAdapter
 import com.example.giuseppedigiorno.booksharing_mad.Model.MapData
@@ -26,13 +20,10 @@ import com.example.giuseppedigiorno.booksharing_mad.R
 import com.example.giuseppedigiorno.booksharing_mad.Utilities.ALGOLIA_API_KEY
 import com.example.giuseppedigiorno.booksharing_mad.Utilities.ALGOLIA_APPLICATION_ID
 import com.example.giuseppedigiorno.booksharing_mad.Utilities.EXTRA_MAP
-import com.example.giuseppedigiorno.booksharing_mad.ViewHolder.SearchBookHolder
 import com.firebase.geofire.GeoFire
 import com.firebase.geofire.GeoLocation
 import com.firebase.geofire.GeoQuery
 import com.firebase.geofire.GeoQueryEventListener
-import com.firebase.ui.database.FirebaseRecyclerAdapter
-import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -43,7 +34,6 @@ import org.json.JSONObject
 class SearchBookActivity : AppCompatActivity() {
 
     lateinit var mRecyclerView: RecyclerView
-    lateinit var mDatabase: DatabaseReference
     lateinit var mUserdatabase: DatabaseReference
     lateinit var mGeoDatabase: DatabaseReference
     lateinit var mBookDatabase: DatabaseReference
@@ -51,7 +41,6 @@ class SearchBookActivity : AppCompatActivity() {
     private var geoQuery: GeoQuery? = null
     private var mCurrentUser: FirebaseUser? = null
     private var userId: String? = null
-    lateinit var query: Query
     private var searchTerm: String? = null
     var latitude: Double? = null
     var longitude: Double? = null
@@ -59,7 +48,6 @@ class SearchBookActivity : AppCompatActivity() {
     var userIdNearby = mutableListOf<String>()
     var mapData = mutableListOf<MapData>()
     var mapDataItem = MapData("", "")
-    var complete = false
     private var index: Index? = null
     private var client: Client? = null
     private var queryAlgolia: com.algolia.search.saas.Query? = null
@@ -93,8 +81,6 @@ class SearchBookActivity : AppCompatActivity() {
             override fun onCancelled(p0: DatabaseError?) {
             }
         })
-        mDatabase = FirebaseDatabase.getInstance().reference
-                .child("searchBooks")
         mGeoDatabase = FirebaseDatabase.getInstance().reference
                 .child("geofire")
         geoFire = GeoFire(mGeoDatabase)
@@ -115,98 +101,10 @@ class SearchBookActivity : AppCompatActivity() {
         }
     }
 
-
- /* private fun searchBook(term: String){
-            query = mDatabase
-                    .orderByChild("title").startAt(term).endAt(term + "\uf88f")
-
-                val options = FirebaseRecyclerOptions.Builder<SearchBookItem>()
-                        .setIndexedQuery(query, mDatabase, SearchBookItem::class.java)
-                        .setLifecycleOwner(this)
-                        .build()
-
-                val adapter = object : FirebaseRecyclerAdapter<SearchBookItem, SearchBookHolder>(options) {
-                    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchBookHolder {
-                        return SearchBookHolder(LayoutInflater.from(parent.context)
-                                .inflate(R.layout.search_book_item, parent, false))
-                    }
-
-                    override fun onBindViewHolder(holder: SearchBookHolder, position: Int, model: SearchBookItem) {
-                        var bookFoundTitle = getRef(position).key
-                        mapData = mutableListOf()
-                        var index: Int = 0
-                        complete = false
-                        mapDataItem= MapData("", "")
-                        holder.bindSearchBook(model)
-                        holder.customView.setOnClickListener {
-                            userIdNearby = mutableListOf()
-                            if(geoLocation != null){
-                                geoQuery = geoFire.queryAtLocation(geoLocation, 10.0)
-                                geoQuery!!.addGeoQueryEventListener( object : GeoQueryEventListener {
-                                    override fun onGeoQueryReady() {
-                                        if(userIdNearby.isNotEmpty() && !complete){
-                                            println(userIdNearby)
-                                            println(complete)
-                                            for(userId in userIdNearby) {
-                                                println(userId)
-                                                mBookDatabase.child(userId).child(bookFoundTitle)
-                                                        .addValueEventListener( object : ValueEventListener {
-                                                            override fun onDataChange(snap: DataSnapshot?) {
-                                                                if(snap!!.childrenCount > 1 && index != snap!!.childrenCount.toInt()) {
-                                                                    mapDataItem = MapData(userId, snap.child("bookTitle").value.toString())
-                                                                    mapData.add(index, mapDataItem)
-                                                                    index ++
-                                                                    }else if(mapData.isNotEmpty()) {
-                                                                        var mapActivity = Intent(this@SearchBookActivity, MapsActivity::class.java)
-                                                                        mapActivity.putExtra(EXTRA_MAP, ArrayList(mapData))
-                                                                        startActivity(mapActivity)
-                                                                    }else{
-                                                                        complete = true
-                                                                        if (mapData.isEmpty()){
-                                                                            Toast.makeText(this@SearchBookActivity, "The book you are looking for it's not near to you", Toast.LENGTH_SHORT).show()
-                                                                            complete = false
-                                                                        }
-                                                                    }
-
-                                                                }
-                                                            override fun onCancelled(p0: DatabaseError?) {
-                                                            }
-
-                                                        })
-                                            }
-
-                                            }
-
-                                    }
-
-                                    override fun onKeyEntered(key: String?, location: GeoLocation?) {
-                                        if(!TextUtils.equals(key, userId)){
-                                            userIdNearby.add(key!!)
-                                        }
-                                    }
-
-                                    override fun onKeyMoved(key: String?, location: GeoLocation?) {
-                                    }
-
-                                    override fun onKeyExited(key: String?) {
-                                    }
-
-                                    override fun onGeoQueryError(error: DatabaseError?) {
-                                    }
-
-                                })
-                            }
-                        }
-                    }
-
-                }
-            mRecyclerView.adapter = adapter
-
-            }*/
-
     private fun searchBookWithAlgolia(term: String) {
         searchBookList = ArrayList()
-        val adapter = SearchBooksRecyclerAdapter(this, searchBookList)
+        val adapter = SearchBooksRecyclerAdapter(this, searchBookList) { bookFound ->
+        }
         mRecyclerView.adapter = adapter
         queryAlgolia = com.algolia.search.saas.Query(term).setAttributesToRetrieve("title", "author").setHitsPerPage(50)
         index!!.searchAsync(queryAlgolia, { jsonObject, algoliaException ->
@@ -218,12 +116,63 @@ class SearchBookActivity : AppCompatActivity() {
                     searchBookItem.author = jsonObjectAlgolia!!.getString("author")
                     searchBookList.add(SearchBookItem(searchBookItem.title, searchBookItem.author))
                 }
-                val adapter = SearchBooksRecyclerAdapter(this, searchBookList)
+                val adapter = SearchBooksRecyclerAdapter(this, searchBookList) { bookFound ->
+                    var bookFoundTitle = bookFound.title
+                    val re =  Regex("[^A-Za-z0-9]")
+                    val prettyfiedTitle = re.replace(bookFoundTitle!!, "")
+                    var i = 0
+                    mapData = mutableListOf()
+                    mapDataItem = MapData("", "")
+                    if(geoLocation != null){
+                        userIdNearby = mutableListOf()
+                        geoQuery = geoFire.queryAtLocation(geoLocation, 10.0)
+                        geoQuery!!.addGeoQueryEventListener( object : GeoQueryEventListener {
+                            override fun onGeoQueryReady() {
+                                if(userIdNearby.isNotEmpty()){
+                                    for(userId in userIdNearby){
+                                        mBookDatabase.child(userId).child(prettyfiedTitle)
+                                                .addValueEventListener( object : ValueEventListener {
+                                                    override fun onCancelled(p0: DatabaseError?) {
+                                                    }
+                                                    override fun onDataChange(snap: DataSnapshot?) {
+                                                        i ++
+                                                        if(snap!!.childrenCount > 0) {
+                                                            mapDataItem = MapData(userId, snap.child("bookTitle").value.toString())
+                                                            mapData.add(mapDataItem)
+                                                        }else if (mapData.isNotEmpty() && i == userIdNearby.count()){
+                                                            var mapActivity = Intent(this@SearchBookActivity, MapsActivity::class.java)
+                                                            mapActivity.putExtra(EXTRA_MAP, ArrayList(mapData))
+                                                            startActivity(mapActivity)
+                                                        } else if (mapData.isEmpty() && i == userIdNearby.count()){
+                                                            Toast.makeText(this@SearchBookActivity, "The book you are looking for is not near to you", Toast.LENGTH_SHORT).show()
+                                                        }
+                                                    }
+                                                })
+                                    }
+                                }
+                            }
+
+                            override fun onKeyEntered(key: String?, location: GeoLocation?) {
+                                if(!TextUtils.equals(key, userId)){
+                                    userIdNearby.add(key!!)
+                                }
+                            }
+
+                            override fun onKeyMoved(key: String?, location: GeoLocation?) {
+                            }
+
+                            override fun onKeyExited(key: String?) {
+                            }
+
+                            override fun onGeoQueryError(error: DatabaseError?) {
+                            }
+                        })
+                    }
+                }
                 mRecyclerView.adapter = adapter
             }
         })
     }
-
 
     fun backButtonPressed(view: View) {
         var showProfileActivity = Intent(this, ShowProfileActivity::class.java)

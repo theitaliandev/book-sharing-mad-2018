@@ -54,7 +54,6 @@ class AddBookDetailActivity : AppCompatActivity() {
     private var mCurrentUser: FirebaseUser? = null
     private var mStorageRef: StorageReference? = null
     private var mDatabase: DatabaseReference? = null
-    private var mSearchDatabase: DatabaseReference? = null
     private var client: Client? = null
     private var index: Index? = null
     private var query: com.algolia.search.saas.Query? = null
@@ -69,8 +68,6 @@ class AddBookDetailActivity : AppCompatActivity() {
         mDatabase = FirebaseDatabase.getInstance().reference
                 .child("books")
                 .child(userId)
-        mSearchDatabase = FirebaseDatabase.getInstance().reference
-                .child("searchBooks")
         mStorageRef = FirebaseStorage.getInstance().reference
 
         bookTitleEditTxt.limitLength(50)
@@ -191,13 +188,8 @@ class AddBookDetailActivity : AppCompatActivity() {
             mDatabase!!.child(prettyfiedTitle).setValue(bookObject)
                     .addOnCompleteListener { task ->
                         if(task.isSuccessful){
-                            var bookSearchObject = HashMap<String, Any>()
-                            bookSearchObject.put("title", book.bookTitle)
-                            bookSearchObject.put("author", book.bookAuthor)
                             query = com.algolia.search.saas.Query(book.bookTitle)
-                            mSearchDatabase!!.child(prettyfiedTitle).setValue(bookSearchObject)
                             index!!.searchAsync(query, { jsonObject, algoliaException ->
-                                println(jsonObject)
                                 if(jsonObject["nbHits"] == 0){
                                     index!!.addObjectAsync(JSONObject()
                                             .put("title", book.bookTitle)
