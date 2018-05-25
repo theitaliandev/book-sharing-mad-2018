@@ -56,4 +56,7 @@
     <string name="registration_alert">Inserisci una email valida ed una password sicura, oppura controlla la tua connessione ad internet</string>
     <string name="book_not_near_to_you">Il libro che stai cercando non è nelle vicinanze</string>
     <string name="title_activity_maps">Map</string>
+    <string name="crop_image_menu_crop">Ritaglia</string>
+    <string name="insert_the_title_of_the_book_you_are_looking_for">Inserisci il titolo del libro che stai cercando</string>
+    <string name="am_here">Io sono qui...</string>
 </resources>

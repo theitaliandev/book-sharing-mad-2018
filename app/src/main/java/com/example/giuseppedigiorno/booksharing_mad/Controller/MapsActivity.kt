@@ -3,7 +3,6 @@ package com.example.giuseppedigiorno.booksharing_mad.Controller
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.renderscript.Sampler
 import com.example.giuseppedigiorno.booksharing_mad.Model.MapData
 import com.example.giuseppedigiorno.booksharing_mad.R
 import com.example.giuseppedigiorno.booksharing_mad.Utilities.EXTRA_MAP
@@ -60,9 +59,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 latitude = snap!!.child("latitude").value.toString().toDouble()
                 longitude = snap.child("longitude").value.toString().toDouble()
                 val userPosition = LatLng(latitude!!, longitude!!)
-                mMap.addMarker(MarkerOptions().position(userPosition).title("Sono qui"))
+                mMap.addMarker(MarkerOptions().position(userPosition).title(getString(R.string.am_here)))
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(userPosition))
-                mMap.animateCamera(CameraUpdateFactory.zoomTo(13f))
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(12f))
             }
             override fun onCancelled(p0: DatabaseError?) {
             }
@@ -80,7 +79,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     longitude = snap!!.child("longitude").value.toString().toDouble()
                     var name = snap!!.child("name").value.toString()
                     val bookFoundPosition = LatLng(latitude!!, longitude!!)
-                    mMap.addMarker(MarkerOptions().position(bookFoundPosition).title("${name} è felice di prestarti ${item.bookTitle}"))
+                    val marker = mMap.addMarker(MarkerOptions().position(bookFoundPosition)
+                            .title(name)
+                            .snippet(item.bookTitle))
+                    marker.tag = item.userId
+                    mMap.setOnInfoWindowClickListener { marker ->
+                        if(marker.title.equals(getString(R.string.am_here))) {
+                            return@setOnInfoWindowClickListener
+                        }else{
+                            val mapDetailActivity = Intent(this@MapsActivity, MapDetailActivity::class.java)
+                            mapDetailActivity.putExtra("bookTitle", marker.snippet)
+                            mapDetailActivity.putExtra("userName", marker.title)
+                            mapDetailActivity.putExtra("userId", marker.tag.toString())
+                            startActivity(mapDetailActivity)
+                            return@setOnInfoWindowClickListener
+                        }
+                    }
                 }
                 override fun onCancelled(p0: DatabaseError?) {
                 }
@@ -88,6 +102,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             })
         }
     }
+
 
     override fun onBackPressed() {
         super.onBackPressed()

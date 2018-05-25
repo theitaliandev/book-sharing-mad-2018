@@ -56,4 +56,7 @@
     <string name="title_activity_maps">Map</string>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCgzn-troqMxR31GY4W9rIQJfIG7Zgr-t0</string>
     <string name="book_not_near_to_you">The book you are looking for it\'s not near to you</string>
+    <string name="crop_image_menu_crop">Crop</string>
+    <string name="insert_the_title_of_the_book_you_are_looking_for">Insert the title of the book you are looking for</string>
+    <string name="am_here">I am here...</string>
 </resources>

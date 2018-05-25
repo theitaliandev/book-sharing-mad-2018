@@ -54,7 +54,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Controller.SearchBookActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -70,7 +70,8 @@
         <activity
             android:name=".Controller.MapsActivity"
             android:label="@string/title_activity_maps"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".Controller.MapDetailActivity"></activity>
     </application>
 
 </manifest>

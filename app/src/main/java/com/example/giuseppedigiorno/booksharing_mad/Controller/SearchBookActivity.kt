@@ -97,7 +97,7 @@ class SearchBookActivity : AppCompatActivity() {
             hideKeyboard()
             searchBookWithAlgolia(searchTerm!!)
         }else{
-            Toast.makeText(this, "Insert the title of the book you are looking for", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.insert_the_title_of_the_book_you_are_looking_for), Toast.LENGTH_LONG).show()
         }
     }
 
@@ -144,7 +144,7 @@ class SearchBookActivity : AppCompatActivity() {
                                                             mapActivity.putExtra(EXTRA_MAP, ArrayList(mapData))
                                                             startActivity(mapActivity)
                                                         } else if (mapData.isEmpty() && i == userIdNearby.count()){
-                                                            Toast.makeText(this@SearchBookActivity, "The book you are looking for is not near to you", Toast.LENGTH_SHORT).show()
+                                                            Toast.makeText(this@SearchBookActivity, getString(R.string.book_not_near_to_you), Toast.LENGTH_SHORT).show()
                                                         }
                                                     }
                                                 })
