@@ -59,4 +59,9 @@
     <string name="crop_image_menu_crop">Crop</string>
     <string name="insert_the_title_of_the_book_you_are_looking_for">Insert the title of the book you are looking for</string>
     <string name="am_here">I am here...</string>
+    <string name="accetta">ACCEPT</string>
+    <string name="rifiuta">REJECT</string>
+    <string name="cancella">CANCEL</string>
+    <string name="conclude">CONCLUDE</string>
+    <string name="remove_book">Remove book</string>
 </resources>

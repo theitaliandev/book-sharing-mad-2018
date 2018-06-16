@@ -17,6 +17,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service android:name=".Utilities.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".Controller.LoginActivity"
             android:screenOrientation="portrait">
@@ -71,7 +77,16 @@
             android:name=".Controller.MapsActivity"
             android:label="@string/title_activity_maps"
             android:screenOrientation="portrait" />
-        <activity android:name=".Controller.MapDetailActivity"></activity>
+        <activity
+            android:name=".Controller.MapDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Controller.ChatActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Controller.ChatListActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Controller.EditBookActivity"></activity>
     </application>
 
 </manifest>

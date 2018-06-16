@@ -3,7 +3,7 @@ package com.example.giuseppedigiorno.booksharing_mad.Model
 import android.os.Parcel
 import android.os.Parcelable
 
-class User constructor(var name:String, var favouriteBookGeneres:String, var bio: String, var city: String, var address: String, var countryCode: String, var latitude: Double, var longitude: Double, var photoUrl: String) : Parcelable {
+class User constructor(var name:String, var favouriteBookGeneres:String, var bio: String, var city: String, var address: String, var countryCode: String, var latitude: Double, var longitude: Double, var photoUrl: String, var sharedBooks: String, var tokenId: String, var totalVote: String) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readString(),
@@ -13,6 +13,9 @@ class User constructor(var name:String, var favouriteBookGeneres:String, var bio
             parcel.readString(),
             parcel.readDouble(),
             parcel.readDouble(),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
             parcel.readString()) {
     }
 
@@ -26,6 +29,9 @@ class User constructor(var name:String, var favouriteBookGeneres:String, var bio
         parcel.writeDouble(latitude)
         parcel.writeDouble(longitude)
         parcel.writeString(photoUrl)
+        parcel.writeString(sharedBooks)
+        parcel.writeString(tokenId)
+        parcel.writeString(totalVote)
     }
 
     override fun describeContents(): Int {

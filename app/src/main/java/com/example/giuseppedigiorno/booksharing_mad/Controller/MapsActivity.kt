@@ -23,7 +23,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     lateinit var mapData: MutableList<MapData>
     private var mCurrentUser: FirebaseUser? = null
     private var mDatabase: DatabaseReference? = null
-    private var userId: String? = null
+    private var currentUserId: String? = null
+    private var currentUserName: String? = null
     var latitude: Double? = null
     var longitude: Double? = null
 
@@ -35,9 +36,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         mapData = intent.getParcelableArrayListExtra(EXTRA_MAP)
-        for(item in mapData) {
-            println(item.userId)
-        }
 
     }
 
@@ -51,13 +49,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun loadUserPosition() {
         mCurrentUser = FirebaseAuth.getInstance().currentUser
-        userId = mCurrentUser!!.uid
+        currentUserId = mCurrentUser!!.uid
         mDatabase = FirebaseDatabase.getInstance().reference
-                .child("users").child(userId)
+                .child("users").child(currentUserId)
         mDatabase!!.addValueEventListener( object : ValueEventListener {
             override fun onDataChange(snap: DataSnapshot?) {
                 latitude = snap!!.child("latitude").value.toString().toDouble()
                 longitude = snap.child("longitude").value.toString().toDouble()
+                currentUserName = snap.child("name").value.toString()
                 val userPosition = LatLng(latitude!!, longitude!!)
                 mMap.addMarker(MarkerOptions().position(userPosition).title(getString(R.string.am_here)))
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(userPosition))
@@ -91,6 +90,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             mapDetailActivity.putExtra("bookTitle", marker.snippet)
                             mapDetailActivity.putExtra("userName", marker.title)
                             mapDetailActivity.putExtra("userId", marker.tag.toString())
+                            mapDetailActivity.putExtra("currentUserId", currentUserId)
+                            mapDetailActivity.putExtra("currentUserName", currentUserName)
                             startActivity(mapDetailActivity)
                             return@setOnInfoWindowClickListener
                         }

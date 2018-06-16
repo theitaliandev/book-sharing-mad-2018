@@ -181,13 +181,15 @@
                 android:textColor="@android:color/darker_gray"/>
 
             <Button
+                android:onClick="requestBookButtonPressed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="30dp"
                 android:background="@drawable/button_outline_start_grad"
                 android:layout_gravity="center"
                 android:text="Request Book"
-                android:textColor="@color/colorPrimary"/>
+                android:textColor="@color/colorPrimary"
+                android:layout_marginBottom="10dp"/>
         </LinearLayout>
 
 

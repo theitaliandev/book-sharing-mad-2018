@@ -28,6 +28,7 @@ import com.google.android.gms.location.LocationSettingsRequest
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.google.firebase.iid.FirebaseInstanceId
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -41,14 +42,15 @@ class ShowProfileActivity : AppCompatActivity() {
 
     private var mDatabase: DatabaseReference?  = null
     private var mCurrentUser: FirebaseUser? = null
+    private var userId: String? = null
 
-    var user = User("","","","","", "", 0.0, 0.0, "")
+    var user = User("","","","","", "", 0.0, 0.0, "", "0", "", "5")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_profile)
         mCurrentUser = FirebaseAuth.getInstance().currentUser
-        var userId = mCurrentUser!!.uid
+        userId = mCurrentUser!!.uid
         mDatabase = FirebaseDatabase.getInstance().reference
                 .child("users")
                 .child(userId)
@@ -61,6 +63,8 @@ class ShowProfileActivity : AppCompatActivity() {
                 user.photoUrl = snap.child("photoUrl").value.toString()
                 user.address = snap.child("address").value.toString()
                 user.countryCode = snap.child("countryCode").value.toString()
+                user.sharedBooks = snap.child("sharedBooks").value.toString()
+                user.totalVote = snap.child("totalVote").value.toString()
 
                 if(!TextUtils.isEmpty(user.photoUrl)){
                     Picasso.get()
@@ -90,12 +94,21 @@ class ShowProfileActivity : AppCompatActivity() {
                 }else{
                     cityTxt.text = getString(R.string.hint_city)
                 }
+
+                totalVote.text = user.totalVote
+                sharedBooks.text = user.sharedBooks
+
             }
 
             override fun onCancelled(error: DatabaseError?) {
 
             }
         })
+
+        var tokenId = FirebaseInstanceId.getInstance().token
+        var tokenObject = HashMap<String, Any>()
+        tokenObject.put("tokenId", tokenId!!)
+        mDatabase!!.updateChildren(tokenObject)
     }
 
     fun editProfileBtnPressed(view: View){
@@ -105,8 +118,10 @@ class ShowProfileActivity : AppCompatActivity() {
     }
 
     fun addBookButtonPressed(view: View) {
-        var addBookActivity = Intent(this, AddBookActivity::class.java)
-        startActivity(addBookActivity)
+        var chatListActivity = Intent(this, ChatListActivity::class.java)
+        chatListActivity.putExtra("currentUserId", userId)
+        chatListActivity.putExtra("currentUserName", user.name)
+        startActivity(chatListActivity)
     }
 
     fun myBooksButtonClicked(view: View) {

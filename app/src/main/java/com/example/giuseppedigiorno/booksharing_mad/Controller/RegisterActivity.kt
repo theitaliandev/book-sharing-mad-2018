@@ -53,6 +53,9 @@ class RegisterActivity : AppCompatActivity() {
                         userObject.put("address", "")
                         userObject.put("latitude", 0.0)
                         userObject.put("longitude", 0.0)
+                        userObject.put("totalVote", "0")
+                        userObject.put("tokenId", "")
+                        userObject.put("sharedBooks", "0")
                         mDatabase!!.child("users").child(userId).setValue(userObject)
                                 .addOnCompleteListener { task ->
                                     if(task.isSuccessful){

@@ -59,4 +59,9 @@
     <string name="crop_image_menu_crop">Ritaglia</string>
     <string name="insert_the_title_of_the_book_you_are_looking_for">Inserisci il titolo del libro che stai cercando</string>
     <string name="am_here">Io sono qui...</string>
+    <string name="accetta">ACCETTA</string>
+    <string name="rifiuta">RIFIUTA</string>
+    <string name="cancella">CANCELLA</string>
+    <string name="conclude">CONCLUDI</string>
+    <string name="remove_book">Rimuovi</string>
 </resources>

@@ -34,7 +34,7 @@
                     android:onClick="addBookButtonPressed"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:background="@drawable/ic_action_add_book"
+                    android:background="@drawable/ic_action_chat"
                     android:layout_marginTop="15dp"
                     android:layout_gravity="center" />
 
@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/add_book_button"
+                    android:text="Chat"
                     android:textStyle="bold"/>
             </LinearLayout>
 
@@ -175,6 +175,7 @@
                         android:layout_weight="1">
 
                         <TextView
+                            android:id="@+id/totalVote"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="9.9"
@@ -200,6 +201,7 @@
                         android:layout_weight="1">
 
                         <TextView
+                            android:id="@+id/sharedBooks"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="114"

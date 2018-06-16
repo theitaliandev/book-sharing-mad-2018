@@ -24,13 +24,14 @@ class BookListActivity : AppCompatActivity() {
     lateinit var mRecyclerView: RecyclerView
     lateinit var mDatabase: DatabaseReference
     lateinit var mCurrentUser: FirebaseUser
+    lateinit var userId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_list)
 
         mCurrentUser = FirebaseAuth.getInstance().currentUser!!
-        var userId = mCurrentUser.uid
+        userId = mCurrentUser.uid
 
         mDatabase = FirebaseDatabase.getInstance().reference
                 .child("books").child(userId)
@@ -59,6 +60,12 @@ class BookListActivity : AppCompatActivity() {
 
             override fun onBindViewHolder(holder: BookHolder, position: Int, model: BookItem) {
                 holder.bindBook(model)
+                var bookTitle = model.bookTitle
+                var author = model.bookAuthor
+                var category = model.bookCategory
+                var myReview = model.bookMyReview
+                var photoUrl = model.bookImageUrl
+                holder.customView.setOnClickListener { startEditBookActivity(userId, bookTitle!!, author!!, category!!, photoUrl!!, myReview!!) }
             }
 
         }
@@ -76,6 +83,16 @@ class BookListActivity : AppCompatActivity() {
         startActivity(showProfileActivity)
     }
 
+    private fun startEditBookActivity(userId: String, bookTitle: String, author: String, category: String, photoUrl: String, myReview: String) {
+        var editBookActivity = Intent(this, EditBookActivity::class.java)
+        editBookActivity.putExtra("userId", userId)
+        editBookActivity.putExtra("bookTitle", bookTitle)
+        editBookActivity.putExtra("author", author)
+        editBookActivity.putExtra("category", category)
+        editBookActivity.putExtra("photoUrl", photoUrl)
+        editBookActivity.putExtra("myReview", myReview)
+        startActivity(editBookActivity)
+    }
 
 
 }
